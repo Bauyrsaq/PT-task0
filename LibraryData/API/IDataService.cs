@@ -22,10 +22,10 @@ namespace LibraryData.API
 
         #region Book
 
-        public abstract void AddBook(int bookId, string name);
+        public abstract void AddBook(int bookId, string author, string name);
         public abstract IBook? GetBook(int bookId);
         public abstract Dictionary<int, IBook> GetBooks();
-        public abstract void UpdateBook(int bookId, string name);
+        public abstract void UpdateBook(int bookId, string author, string name);
         public abstract void DeleteBook(int bookId);
 
         #endregion

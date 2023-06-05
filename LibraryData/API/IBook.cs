@@ -9,6 +9,7 @@ namespace LibraryData.API
     public interface IBook
     {
         int Id { get; set; }
+        string Author { get; set; }
         string Name { get; set; }
     }
 }

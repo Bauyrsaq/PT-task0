@@ -55,9 +55,9 @@ namespace LibraryData
 
         #region Book
 
-        public void AddBook(int bookId, string name)
+        public void AddBook(int bookId, string author, string name)
         {
-            _dataRepository.AddBook(bookId, name);
+            _dataRepository.AddBook(bookId, author, name);
         }
 
         public IBook? GetBook(int bookId)
@@ -70,9 +70,9 @@ namespace LibraryData
             return _dataRepository.GetBooks();
         }
 
-        public void UpdateBook(int bookId, string name)
+        public void UpdateBook(int bookId, string author, string name)
         {
-            _dataRepository.UpdateBook(bookId, name);
+            _dataRepository.UpdateBook(bookId, author, name);
         }
 
         public void DeleteBook(int bookId)

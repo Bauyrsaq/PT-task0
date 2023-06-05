@@ -19,8 +19,8 @@ namespace LibraryData
         {
             if (connectionString is null)
             {
-                string _projectRootDir = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName;
-                string _DBRelativePath = @"Database\LibraryDB.mdf";
+                string _DBRelativePath = @"LibraryDBTest.mdf";
+                string _projectRootDir = Environment.CurrentDirectory;
                 string _DBPath = Path.Combine(_projectRootDir, _DBRelativePath);
                 this.ConnectionString = $@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename={_DBPath};Integrated Security = True; Connect Timeout = 30;";
             }
@@ -112,6 +112,7 @@ namespace LibraryData
                 Database.Book entity = new Database.Book()
                 {
                     Id = book.Id,
+                    Author = book.Author,
                     Name = book.Name,
                 };
 
@@ -131,7 +132,7 @@ namespace LibraryData
 
                 Database.Book? book = query.FirstOrDefault();
 
-                return book is not null ? new Book(book.Id, book.Name) : null;
+                return book is not null ? new Book(book.Id, book.Author, book.Name) : null;
             }
         }
 
@@ -141,7 +142,7 @@ namespace LibraryData
             {
                 IQueryable<IBook> query =
                     from b in context.Books
-                    select new Book(b.Id, b.Name) as IBook;
+                    select new Book(b.Id, b.Author, b.Name) as IBook;
 
                 return query.ToDictionary(k => k.Id);
             }
@@ -153,6 +154,7 @@ namespace LibraryData
             {
                 Database.Book toUpdate = (from b in context.Books where b.Id == book.Id select b).FirstOrDefault()!;
 
+                toUpdate.Author = book.Author;
                 toUpdate.Name = book.Name;
 
                 context.SubmitChanges();
@@ -183,7 +185,7 @@ namespace LibraryData
                 Database.State entity = new Database.State()
                 {
                     Id = state.Id,
-                    BookId = state.bookId,
+                    bookId = state.bookId,
                     bookQuantity = state.bookQuantity,
                 };
 
@@ -203,7 +205,7 @@ namespace LibraryData
 
                 Database.State? state = query.FirstOrDefault();
 
-                return state is not null ? new State(state.Id, state.BookId, state.bookQuantity) : null;
+                return state is not null ? new State(state.Id, state.bookId, state.bookQuantity) : null;
             }
         }
 
@@ -213,7 +215,7 @@ namespace LibraryData
             {
                 IQueryable<IState> query =
                     from s in context.States
-                    select new State(s.Id, s.BookId, s.bookQuantity) as IState;
+                    select new State(s.Id, s.bookId, s.bookQuantity) as IState;
 
                 return query.ToDictionary(k => k.Id);
             }
@@ -225,7 +227,7 @@ namespace LibraryData
             {
                 Database.State toUpdate = (from s in context.States where s.Id == state.Id select s).FirstOrDefault()!;
 
-                toUpdate.BookId = state.bookId;
+                toUpdate.bookId = state.bookId;
                 toUpdate.bookQuantity = state.bookQuantity;
 
                 context.SubmitChanges();

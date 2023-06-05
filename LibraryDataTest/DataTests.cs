@@ -21,10 +21,10 @@ namespace LibraryDataTest
         public static void ClassInitializeMethod(TestContext context)
         {
             string _DBRelativePath = @"LibraryDBTest.mdf";
-            string _projectRootDir = Directory.GetCurrentDirectory();
+            string _projectRootDir = Environment.CurrentDirectory;
             string _DBPath = Path.Combine(_projectRootDir, _DBRelativePath);
             FileInfo _databaseFile = new FileInfo(_DBPath);
-            Assert.IsTrue(_databaseFile.Exists, $"Database file does not exist at: {_projectRootDir}");
+            Assert.IsTrue(_databaseFile.Exists, $"Database file does not exist at: {_databaseFile}");
             connectionString = $@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename={_DBPath};Integrated Security = True; Connect Timeout = 30;";
         }
 
@@ -42,6 +42,25 @@ namespace LibraryDataTest
             Assert.AreEqual("John", user.Name);
             Assert.AreEqual("Wick", user.Surname);
 
+            Assert.IsNotNull(_dataRepository.GetUsers());
+
+            Assert.ThrowsException<Exception>( () => _dataRepository.GetUser(userId + 2));
+
+            _dataRepository.UpdateUser(userId, "Kate", "Baffen");
+
+            IUser userUpdated = _dataRepository.GetUser(userId);
+
+            Assert.IsNotNull(userUpdated);
+            Assert.AreEqual(userId, userUpdated.Id);
+            Assert.AreEqual("Kate", userUpdated.Name);
+            Assert.AreEqual("Baffen", userUpdated.Surname);
+
+            Assert.ThrowsException<Exception>( () => _dataRepository.UpdateUser(userId + 2,
+                "Kate", "Baffen"));
+
+            _dataRepository.DeleteUser(userId);
+            Assert.ThrowsException<Exception>( () => _dataRepository.GetUser(userId));
+            Assert.ThrowsException<Exception>( () => _dataRepository.DeleteUser(userId));
         }
     }
 }

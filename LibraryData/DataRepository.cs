@@ -29,7 +29,7 @@ namespace LibraryData
             _context.AddUser(user);
         }
 
-        public IUser? GetUser(int userId) 
+        public IUser GetUser(int userId) 
         {
             IUser? user = this._context.GetUser(userId);
 
@@ -68,13 +68,13 @@ namespace LibraryData
 
         #region Book
 
-        public void AddBook(int bookId, string name)
+        public void AddBook(int bookId, string author, string name)
         {
-            IBook book = new Book(bookId, name);
+            IBook book = new Book(bookId, author, name);
             _context.AddBook(book);
         }
 
-        public IBook? GetBook(int bookId)
+        public IBook GetBook(int bookId)
         {
             IBook? book = this._context.GetBook(bookId);
 
@@ -89,9 +89,9 @@ namespace LibraryData
             return _context.GetBooks();
         }
 
-        public void UpdateBook(int bookId, string name)
+        public void UpdateBook(int bookId, string author, string name)
         {
-            IBook book = new Book(bookId, name);
+            IBook book = new Book(bookId, author, name);
 
             if (this.GetBook(bookId) == null)
                 throw new ArgumentNullException("Book doesn't exist");
@@ -124,7 +124,7 @@ namespace LibraryData
             _context.AddState(state);
         }
 
-        public IState? GetState(int stateId)
+        public IState GetState(int stateId)
         {
             IState? state = this._context.GetState(stateId);
 
@@ -174,7 +174,7 @@ namespace LibraryData
             _context.AddBorrowing(borrowing);
         }
 
-        public IBorrowing? GetBorrowing(int borrowingId)
+        public IBorrowing GetBorrowing(int borrowingId)
         {
             IBorrowing? borrowing = this._context.GetBorrowing(borrowingId);
 
