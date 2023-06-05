@@ -13,9 +13,9 @@ namespace LibraryData
         public int userId { get; set; }
         public int stateId { get; set; }
         public DateTime Date { get; set; }
-        public int bookQuantity { get; set; }
+        public int? bookQuantity { get; set; }
 
-        public Borrowing(int id, int userId, int stateId, DateTime date, int bookQuantity)
+        public Borrowing(int id, int userId, int stateId, DateTime date, int? bookQuantity = null)
         {
             this.Id = id;
             this.userId = userId;

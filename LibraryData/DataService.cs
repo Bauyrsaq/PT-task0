@@ -117,7 +117,7 @@ namespace LibraryData
 
         public void AddBorrowing(int borrowingId, int userId, int stateId, int bookQuantity = 0)
         {
-            _dataRepository.AddBorrowing(borrowingId, userId, stateId, DateTime.Now, bookQuantity);
+            _dataRepository.AddBorrowing(borrowingId, userId, stateId, bookQuantity);
         }
 
         public IBorrowing? GetBorrowing(int borrowingId)

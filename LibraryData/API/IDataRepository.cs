@@ -49,10 +49,10 @@ namespace LibraryData.API
 
         #region Borrowing
 
-        void AddBorrowing(int borrowingId, int userId, int stateId, DateTime Date, int bookQuantity);
+        void AddBorrowing(int borrowingId, int userId, int stateId, int bookQuantity = 0);
         IBorrowing GetBorrowing(int borrowingId);
         Dictionary<int, IBorrowing> GetBorrowings();
-        void UpdateBorrowing(int borrowingId, int userId, int stateId, DateTime Date, int bookQuantity);
+        void UpdateBorrowing(int borrowingId, int userId, int stateId, DateTime Date, int? bookQuantity);
         void DeleteBorrowing(int borrowingId);
 
         #endregion

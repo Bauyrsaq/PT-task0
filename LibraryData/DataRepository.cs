@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using LibraryData.API;
 using LibraryData.Database;
+using Microsoft.Extensions.Logging;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace LibraryData
@@ -114,8 +115,8 @@ namespace LibraryData
 
         public void AddState(int stateId, int bookId, int bookQuantity)
         {
-            if (this.GetState(stateId) == null)
-                throw new Exception("State doesn't exist");
+            if (this.GetBook(bookId) == null)
+                throw new Exception("Book doesn't exist");
 
             if (bookQuantity <= 0)
                 throw new Exception("Books quantity must be graete than 0");
@@ -141,8 +142,8 @@ namespace LibraryData
 
         public void UpdateState(int stateId, int bookId, int bookQuantity)
         {
-            if (this.GetState(stateId) == null)
-                throw new Exception("State doesn't exist");
+            if (this.GetBook(bookId) == null)
+                throw new Exception("Book doesn't exist");
 
             if (bookQuantity <= 0)
                 throw new Exception("Books quantity must be graete than 0");
@@ -168,9 +169,13 @@ namespace LibraryData
 
         #region Borrowing
 
-        public void AddBorrowing(int borrowingId, int userId, int stateId, DateTime Date, int bookQuantity)
+        public void AddBorrowing(int borrowingId, int userId, int stateId, int bookQuantity)
         {
-            IBorrowing borrowing = new Borrowing(borrowingId, userId, stateId, Date, bookQuantity);
+            IUser user = this.GetUser(userId);
+            IState state = this.GetState(stateId);
+            IBook book = this.GetBook(state.bookId);
+
+            IBorrowing borrowing = new Borrowing(borrowingId, userId, stateId, DateTime.Now, bookQuantity);
             _context.AddBorrowing(borrowing);
         }
 
@@ -189,7 +194,7 @@ namespace LibraryData
             return _context.GetBorrowings();
         }
 
-        public void UpdateBorrowing(int borrowingId, int userId, int stateId, DateTime Date, int bookQuantity)
+        public void UpdateBorrowing(int borrowingId, int userId, int stateId, DateTime Date, int? bookQuantity)
         {
             IBorrowing borrowing = new Borrowing(borrowingId, userId, stateId, Date, bookQuantity);
 
@@ -204,7 +209,7 @@ namespace LibraryData
             if (this.GetBorrowing(borrowingId) == null)
                 throw new ArgumentNullException("Borrowing doesn't exist");
 
-            this._context.DeleteState(borrowingId);
+            this._context.DeleteBorrowing(borrowingId);
         }
 
         #endregion
