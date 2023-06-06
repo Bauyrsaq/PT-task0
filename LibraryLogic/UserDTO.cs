@@ -1,23 +1,23 @@
-﻿using LibraryData.API;
+﻿using LibraryLogic.API;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LibraryData
+namespace LibraryLogic
 {
-    internal class Book : IBook
+    internal class UserDTO : IUserDTO
     {
         public int Id { get; set; }
-        public string Author { get; set; }
         public string Name { get; set; }
+        public string Surname { get; set; }
 
-        public Book(int id, string author, string name)
+        public UserDTO(int id, string name, string surname)
         {
             this.Id = id;
-            this.Author = author;
             this.Name = name;
+            this.Surname = surname;
         }
     }
 }

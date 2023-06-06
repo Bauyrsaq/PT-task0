@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace LibraryData
 {
-    public class DataContext : IDataContext
+    internal class DataContext : IDataContext
     {
         private readonly string ConnectionString;
 

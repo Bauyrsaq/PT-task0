@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace LibraryData
 {
-    public class User : IUser
+    internal class User : IUser
     {
         public int Id { get; set; }
         public string Name { get; set; }

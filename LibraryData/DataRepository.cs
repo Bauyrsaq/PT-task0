@@ -13,7 +13,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace LibraryData
 {
-    public class DataRepository : IDataRepository
+    internal class DataRepository : IDataRepository
     {
         private IDataContext _context;
 
