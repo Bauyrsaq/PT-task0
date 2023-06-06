@@ -169,7 +169,7 @@ namespace LibraryData
 
         #region Borrowing
 
-        public void AddBorrowing(int borrowingId, int userId, int stateId, int bookQuantity)
+        public void AddBorrowing(int borrowingId, int userId, int stateId, int bookQuantity = 0)
         {
             IUser user = this.GetUser(userId);
             IState state = this.GetState(stateId);

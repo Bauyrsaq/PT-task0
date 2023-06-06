@@ -5,15 +5,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LibraryData
+namespace LibraryLogicTest.Mock
 {
-    internal class State : IState
+    internal class StateMock : IState
     {
         public int Id { get; set; }
         public int bookId { get; set; }
         public int bookQuantity { get; set; }
 
-        public State(int id, int bookId, int bookQuantity = 0)
+        public StateMock(int id, int bookId, int bookQuantity = 0)
         {
             this.Id = id;
             this.bookId = bookId;
