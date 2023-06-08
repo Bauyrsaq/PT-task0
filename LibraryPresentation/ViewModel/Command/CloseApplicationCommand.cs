@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace LibraryPresentation.ViewModel.Command
@@ -23,7 +24,7 @@ namespace LibraryPresentation.ViewModel.Command
 
         public void Execute(object parameter)
         {
-           // Application.Current.Shutdown();
+           Application.Current.Shutdown();
         }
     }
 }
