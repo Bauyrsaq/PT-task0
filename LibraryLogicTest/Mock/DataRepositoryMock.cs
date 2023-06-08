@@ -45,6 +45,11 @@ namespace LibraryLogicTest.Mock
             this.Users.Remove(userId);
         }
 
+        public int GetUsersCount()
+        {
+            return this.Users.Count;
+        }
+
         #endregion
 
 
@@ -76,6 +81,11 @@ namespace LibraryLogicTest.Mock
             this.Books.Remove(bookId);
         }
 
+        public int GetBooksCount()
+        {
+            return this.Books.Count;
+        }
+
         #endregion
 
 
@@ -105,6 +115,11 @@ namespace LibraryLogicTest.Mock
         public void DeleteState(int stateId)
         {
             this.States.Remove(stateId);
+        }
+
+        public int GetStatesCount()
+        {
+            return this.States.Count;
         }
 
 
@@ -143,6 +158,11 @@ namespace LibraryLogicTest.Mock
         public void DeleteBorrowing(int borrowingId)
         {
             this.Borrowings.Remove(borrowingId);
+        }
+
+        public int GetBorrowingsCount()
+        {
+            return this.Borrowings.Count;
         }
 
         #endregion

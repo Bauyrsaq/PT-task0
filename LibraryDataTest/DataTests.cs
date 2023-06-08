@@ -43,6 +43,7 @@ namespace LibraryDataTest
             Assert.AreEqual("Wick", user.Surname);
 
             Assert.IsNotNull(_dataRepository.GetUsers());
+            Assert.IsTrue(_dataRepository.GetUsersCount() > 0);
 
             Assert.ThrowsException<Exception>(() => _dataRepository.GetUser(userId + 2));
 
@@ -78,6 +79,7 @@ namespace LibraryDataTest
             Assert.AreEqual("Clean Code", book.Name);
 
             Assert.IsNotNull(_dataRepository.GetBooks());
+            Assert.IsTrue(_dataRepository.GetBooksCount() > 0);
 
             Assert.ThrowsException<Exception>( () => _dataRepository.GetBook(12));
 
@@ -117,6 +119,7 @@ namespace LibraryDataTest
             Assert.AreEqual(20, state.bookQuantity);
 
             Assert.IsNotNull(_dataRepository.GetStates());
+            Assert.IsTrue(_dataRepository.GetStatesCount() > 0);
 
             Assert.ThrowsException<Exception>( () => _dataRepository.GetState(stateId + 2));
 
@@ -170,6 +173,7 @@ namespace LibraryDataTest
             Assert.AreEqual(userId, borrowing.userId);
 
             Assert.IsNotNull(_dataRepository.GetBorrowings());
+            Assert.IsTrue(_dataRepository.GetBorrowingsCount() > 0);
 
             _dataRepository.UpdateBorrowing(borrowingId, userId, stateId, DateTime.Now, null);
 

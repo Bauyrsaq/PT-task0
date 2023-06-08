@@ -19,5 +19,6 @@ namespace LibraryLogic.API
         Dictionary<int, IBorrowingDTO> GetBorrowings();
         void UpdateBorrowing(int borrowingId, int userId, int stateId, DateTime Date, int? bookQuantity);
         void DeleteBorrowing(int borrowingId);
+        int GetBorrowingsCount();
     }
 }

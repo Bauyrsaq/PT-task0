@@ -53,5 +53,10 @@ namespace LibraryLogic
         {
             this._dataRepository.DeleteBorrowing(borrowingId);
         }
+
+        public int GetBorrowingsCount()
+        {
+            return this._dataRepository.GetBorrowingsCount();
+        }
     }
 }

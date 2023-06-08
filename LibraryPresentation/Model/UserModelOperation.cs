@@ -54,5 +54,10 @@ namespace LibraryPresentation.Model
         {
             this._userCrud.DeleteUser(userId);
         }
+
+        public int GetUsersCount()
+        {
+            return this._userCrud.GetUsersCount();
+        }
     }
 }

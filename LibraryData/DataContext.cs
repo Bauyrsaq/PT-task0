@@ -97,6 +97,14 @@ namespace LibraryData
             }
         }
 
+        public int GetUsersCount()
+        {
+            using (LibraryDataContext context = new LibraryDataContext(this.ConnectionString))
+            {
+                return context.Users.Count();
+            }
+        }
+
         #endregion
 
 
@@ -170,6 +178,14 @@ namespace LibraryData
             }
         }
 
+        public int GetBooksCount()
+        {
+            using (LibraryDataContext context = new LibraryDataContext(this.ConnectionString))
+            {
+                return context.Books.Count();
+            }
+        }
+
         #endregion
 
 
@@ -240,6 +256,14 @@ namespace LibraryData
                 context.States.DeleteOnSubmit(toDelete);
 
                 context.SubmitChanges();
+            }
+        }
+
+        public int GetStatesCount()
+        {
+            using (LibraryDataContext context = new LibraryDataContext(this.ConnectionString))
+            {
+                return context.States.Count();
             }
         }
 
@@ -317,6 +341,14 @@ namespace LibraryData
                 context.Borrowings.DeleteOnSubmit(toDelete);
 
                 context.SubmitChanges();
+            }
+        }
+
+        public int GetBorrowingsCount()
+        {
+            using (LibraryDataContext context = new LibraryDataContext(this.ConnectionString))
+            {
+                return context.Borrowings.Count();
             }
         }
 

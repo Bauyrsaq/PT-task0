@@ -53,5 +53,10 @@ namespace LibraryLogic
         {
             this._dataRepository.DeleteState(stateId);
         }
+
+        public int GetStatesCount()
+        {
+            return this._dataRepository.GetStatesCount();
+        }
     }
 }

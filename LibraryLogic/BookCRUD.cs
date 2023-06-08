@@ -53,5 +53,10 @@ namespace LibraryLogic
         {
             this._dataRepository.DeleteBook(bookId);
         }
+
+        public int GetBooksCount()
+        {
+            return this._dataRepository.GetBooksCount();
+        }
     }
 }

@@ -19,5 +19,6 @@ namespace LibraryLogic.API
         Dictionary<int, IBookDTO> GetBooks();
         void UpdateBook(int bookId, string author, string name);
         void DeleteBook(int bookId);
+        int GetBooksCount();
     }
 }

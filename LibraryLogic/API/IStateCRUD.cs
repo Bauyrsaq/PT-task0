@@ -19,5 +19,6 @@ namespace LibraryLogic.API
         Dictionary<int, IStateDTO> GetStates();
         void UpdateState(int stateId, int bookId, int bookQuantity);
         void DeleteState(int stateId);
+        int GetStatesCount();
     }
 }

@@ -19,5 +19,6 @@ namespace LibraryPresentation.Model.API
         Dictionary<int, IUserModel> GetUsers();
         void UpdateUser(int userId, string name, string surname);
         void DeleteUser(int userId);
+        int GetUsersCount();
     }
 }

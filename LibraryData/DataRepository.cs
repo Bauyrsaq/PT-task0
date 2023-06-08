@@ -64,6 +64,11 @@ namespace LibraryData
             this._context.DeleteUser(userId);
         }
 
+        public int GetUsersCount()
+        {
+            return this._context.GetUsersCount();
+        }
+
         #endregion
 
 
@@ -106,6 +111,11 @@ namespace LibraryData
                 throw new ArgumentNullException(nameof(Book));
 
             this._context.DeleteBook(bookId);
+        }
+
+        public int GetBooksCount()
+        {
+            return this._context.GetBooksCount();
         }
 
         #endregion
@@ -164,6 +174,11 @@ namespace LibraryData
             this._context.DeleteState(stateId);
         }
 
+        public int GetStatesCount()
+        {
+            return this._context.GetStatesCount();
+        }
+
         #endregion
 
 
@@ -210,6 +225,11 @@ namespace LibraryData
                 throw new ArgumentNullException("Borrowing doesn't exist");
 
             this._context.DeleteBorrowing(borrowingId);
+        }
+
+        public int GetBorrowingsCount()
+        {
+            return this._context.GetBorrowingsCount();
         }
 
         #endregion

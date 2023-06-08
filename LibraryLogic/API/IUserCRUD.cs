@@ -19,5 +19,6 @@ namespace LibraryLogic.API
         Dictionary<int, IUserDTO> GetUsers();
         void UpdateUser(int userId, string name, string surname);
         void DeleteUser(int userId);
+        int GetUsersCount();
     }
 }

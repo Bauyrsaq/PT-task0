@@ -53,5 +53,10 @@ namespace LibraryLogic
         {
             this._dataRepository.DeleteUser(userId);
         }
+
+        public int GetUsersCount()
+        {
+            return this._dataRepository.GetUsersCount();
+        }
     }
 }

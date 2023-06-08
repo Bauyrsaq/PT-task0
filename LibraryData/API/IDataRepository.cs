@@ -21,6 +21,7 @@ namespace LibraryData.API
         Dictionary<int, IUser> GetUsers();
         void UpdateUser(int userId, string name, string surname);
         void DeleteUser(int userId);
+        int GetUsersCount();
 
         #endregion
 
@@ -32,6 +33,7 @@ namespace LibraryData.API
         Dictionary<int, IBook> GetBooks();
         void UpdateBook(int bookId, string author, string name);
         void DeleteBook(int bookId);
+        int GetBooksCount();
 
         #endregion
 
@@ -43,6 +45,7 @@ namespace LibraryData.API
         Dictionary<int, IState> GetStates();
         void UpdateState(int stateId, int bookId, int bookQuantity);
         void DeleteState(int stateId);
+        int GetStatesCount();
 
         #endregion
 
@@ -54,6 +57,7 @@ namespace LibraryData.API
         Dictionary<int, IBorrowing> GetBorrowings();
         void UpdateBorrowing(int borrowingId, int userId, int stateId, DateTime Date, int? bookQuantity);
         void DeleteBorrowing(int borrowingId);
+        int GetBorrowingsCount();
 
         #endregion
     }
