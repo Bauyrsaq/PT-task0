@@ -54,5 +54,10 @@ namespace LibraryPresentation.Model
         {
             this._stateCrud.DeleteState(stateId);
         }
+
+        public int GetStatesCount()
+        {
+            return this._stateCrud.GetStatesCount();
+        }
     }
 }

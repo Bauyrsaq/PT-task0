@@ -54,5 +54,10 @@ namespace LibraryPresentation.Model
         {
             this._bookCrud.DeleteBook(bookId);
         }
+
+        public int GetBooksCount()
+        {
+            return this._bookCrud.GetBooksCount();
+        }
     }
 }

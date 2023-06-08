@@ -122,7 +122,7 @@ namespace LibraryPresentation.ViewModel.User
 
             this.IsUserSelected = false;
 
-            Task.Run(this.LoadUsers);
+            this.LoadUsers();
         }
 
         private bool CanStoreUser()
@@ -135,16 +135,13 @@ namespace LibraryPresentation.ViewModel.User
 
         private void StoreUser()
         {
-            Task.Run(async () =>
-            {
-                int lastId = this._modelOperation.GetUsersCount() + 1;
+            int lastId = this._modelOperation.GetUsersCount() + 1;
 
-                this._modelOperation.AddUser(lastId, this.Name, this.Surname);
+            this._modelOperation.AddUser(lastId, this.Name, this.Surname);
 
-                this._informer.InformSuccess("User successfully created!");
+            this._informer.InformSuccess("User successfully created!");
 
-                this.LoadUsers();
-            });
+            this.LoadUsers();
         }
 
         private void DeleteUser()

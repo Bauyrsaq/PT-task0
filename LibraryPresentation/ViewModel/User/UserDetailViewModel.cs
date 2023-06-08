@@ -77,12 +77,9 @@ namespace LibraryPresentation.ViewModel.User
 
         private void Update()
         {
-            Task.Run(() =>
-            {
-                this._modelOperation.UpdateUser(this.Id, this.Name, this.Surname);
+            this._modelOperation.UpdateUser(this.Id, this.Name, this.Surname);
 
-                this._informer.InformSuccess("User successfully updated!");
-            });
+            this._informer.InformSuccess("User successfully updated!");
         }
 
         private bool CanUpdate()

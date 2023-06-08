@@ -25,6 +25,7 @@ namespace LibraryPresentation.ViewModel.User.API
         ObservableCollection<IUserDetailViewModel> Users { get; set; }
 
         string Name { get; set; }
+
         string Surname { get; set; }
 
         bool IsUserSelected { get; set; }

@@ -19,5 +19,6 @@ namespace LibraryPresentation.Model.API
         Dictionary<int, IStateModel> GetStates();
         void UpdateState(int stateId, int bookId, int bookQuantity);
         void DeleteState(int stateId);
+        int GetStatesCount();
     }
 }

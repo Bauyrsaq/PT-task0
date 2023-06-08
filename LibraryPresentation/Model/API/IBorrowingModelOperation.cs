@@ -19,5 +19,6 @@ namespace LibraryPresentation.Model.API
         Dictionary<int, IBorrowingModel> GetBorrowings();
         void UpdateBorrowing(int borrowingId, int userId, int stateId, DateTime Date, int? bookQuantity);
         void DeleteBorrowing(int borrowingId);
+        int GetBorrowingsCount();
     }
 }

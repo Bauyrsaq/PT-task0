@@ -25,11 +25,9 @@ namespace LibraryPresentation.ViewModel.Command
         {
             return true;
         }
-
-        public void Execute(object parameter) { }
-        /*
+        
         public void Execute(object parameter)
-        {
+        {/*
             UserControl userControl = parameter as UserControl;
 
             Window parentWindow = Window.GetWindow(userControl);
@@ -50,7 +48,7 @@ namespace LibraryPresentation.ViewModel.Command
                             mainViewModel.SelectedViewModel = new EventMasterViewModel(); break;
                     }
                 }
-            }
-        }*/
+            }*/
+        }
     }
 }

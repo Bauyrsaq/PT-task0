@@ -54,5 +54,10 @@ namespace LibraryPresentation.Model
         {
             this._borrowingCrud.DeleteBorrowing(borrowingId);
         }
+
+        public int GetBorrowingsCount()
+        {
+            return this._borrowingCrud.GetBorrowingsCount();
+        }
     }
 }
