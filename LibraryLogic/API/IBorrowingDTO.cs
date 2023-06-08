@@ -12,6 +12,6 @@ namespace LibraryLogic.API
         int userId { get; set; }
         int stateId { get; set; }
         DateTime Date { get; set; }
-        public int? bookQuantity { get; set; }
+        int? bookQuantity { get; set; }
     }
 }
