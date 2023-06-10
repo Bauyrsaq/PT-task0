@@ -1,8 +1,4 @@
 ﻿using LibraryPresentation.Model.API;
-using LibraryPresentation.ViewModel.API;
-using LibraryPresentation.ViewModel.Book.API;
-using LibraryPresentation.ViewModel.Command;
-using LibraryPresentation.ViewModel.Book.API;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,7 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows;
 
-namespace LibraryPresentation.ViewModel.Book
+namespace LibraryPresentation.ViewModel
 {
     internal class BookMasterViewModel : IViewModel, IBookMasterViewModel
     {
@@ -160,7 +156,7 @@ namespace LibraryPresentation.ViewModel.Book
             }
         }
 
-        private async void LoadBooks()
+        private void LoadBooks()
         {
             Dictionary<int, IBookModel> Books = this._modelOperation.GetBooks();
 

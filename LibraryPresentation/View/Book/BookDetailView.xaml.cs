@@ -12,12 +12,12 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace LibraryPresentation.View.Book
+namespace LibraryPresentation.View
 {
     /// <summary>
     /// Interaction logic for BookDetailView.xaml
     /// </summary>
-    public partial class BookDetailView : Window
+    public partial class BookDetailView : UserControl
     {
         public BookDetailView()
         {

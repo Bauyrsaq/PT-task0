@@ -48,6 +48,9 @@
       <Generator>MSLinqToSQLGenerator</Generator>
       <LastGenOutput>Library.designer.cs</LastGenOutput>
     </None>
+    <None Update="Database\LibraryDB.mdf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

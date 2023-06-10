@@ -1,15 +1,12 @@
 ﻿using LibraryPresentation.Model.API;
-using LibraryPresentation.ViewModel.API;
-using LibraryPresentation.ViewModel.User.API;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using LibraryPresentation.ViewModel.Command;
 
-namespace LibraryPresentation.ViewModel.User
+namespace LibraryPresentation.ViewModel
 {
     internal class UserDetailViewModel : IViewModel, IUserDetailViewModel
     {

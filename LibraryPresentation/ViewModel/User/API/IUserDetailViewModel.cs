@@ -5,9 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using LibraryPresentation.ViewModel.API;
 
-namespace LibraryPresentation.ViewModel.User.API
+namespace LibraryPresentation.ViewModel
 {
     public interface IUserDetailViewModel
     {

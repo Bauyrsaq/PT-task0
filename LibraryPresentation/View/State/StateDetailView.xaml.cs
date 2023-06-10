@@ -12,12 +12,12 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace LibraryPresentation.View.State
+namespace LibraryPresentation.View
 {
     /// <summary>
     /// Interaction logic for StateDetailView.xaml
     /// </summary>
-    public partial class StateDetailView : Window
+    public partial class StateDetailView : UserControl
     {
         public StateDetailView()
         {

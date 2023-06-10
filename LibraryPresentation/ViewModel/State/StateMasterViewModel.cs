@@ -1,8 +1,4 @@
 ﻿using LibraryPresentation.Model.API;
-using LibraryPresentation.ViewModel.API;
-using LibraryPresentation.ViewModel.State.API;
-using LibraryPresentation.ViewModel.Command;
-using LibraryPresentation.ViewModel.State.API;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,7 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows;
 
-namespace LibraryPresentation.ViewModel.State
+namespace LibraryPresentation.ViewModel
 {
     internal class StateMasterViewModel : IViewModel, IStateMasterViewModel
     {
@@ -161,7 +157,7 @@ namespace LibraryPresentation.ViewModel.State
             }
         }
 
-        private async void LoadStates()
+        private void LoadStates()
         {
             Dictionary<int, IStateModel> States = this._modelOperation.GetStates();
 

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace LibraryPresentation.ViewModel.Command
+namespace LibraryPresentation.ViewModel
 {
     internal class OnClickCommand : ICommand
     {

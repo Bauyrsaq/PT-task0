@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LibraryPresentation.ViewModel.API
+namespace LibraryPresentation.ViewModel
 {
     internal class IViewModel : INotifyPropertyChanged
     {

@@ -10,7 +10,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace LibraryDataTest
 {
     [TestClass]
-    [DeploymentItem("LibraryDBTest.mdf")]
+    [DeploymentItem(@"LibraryDataTest\LibraryDBTest.mdf", "LibraryDBTest.mdf")]
     public class DataTests
     {
         private static string connectionString;
@@ -20,8 +20,8 @@ namespace LibraryDataTest
         [ClassInitialize]
         public static void ClassInitializeMethod(TestContext context)
         {
-            string _DBRelativePath = @"LibraryDBTest.mdf";
-            string _projectRootDir = Environment.CurrentDirectory;
+            string _projectRootDir = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName;
+            string _DBRelativePath = @"LibraryDataTest\LibraryDBTest.mdf";
             string _DBPath = Path.Combine(_projectRootDir, _DBRelativePath);
             FileInfo _databaseFile = new FileInfo(_DBPath);
             Assert.IsTrue(_databaseFile.Exists, $"Database file does not exist at: {_databaseFile}");

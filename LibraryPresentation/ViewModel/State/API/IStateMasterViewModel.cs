@@ -1,7 +1,4 @@
 ﻿using LibraryPresentation.Model.API;
-using LibraryPresentation.ViewModel.API;
-using LibraryPresentation.ViewModel.State.API;
-using LibraryPresentation.ViewModel.State;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,7 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows;
 
-namespace LibraryPresentation.ViewModel.State.API
+namespace LibraryPresentation.ViewModel
 {
     public interface IStateMasterViewModel
     {

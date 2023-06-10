@@ -12,12 +12,12 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace LibraryPresentation.View.Borrowing
+namespace LibraryPresentation.View
 {
     /// <summary>
     /// Interaction logic for BorrowingDetailView.xaml
     /// </summary>
-    public partial class BorrowingDetailView : Window
+    public partial class BorrowingDetailView : UserControl
     {
         public BorrowingDetailView()
         {

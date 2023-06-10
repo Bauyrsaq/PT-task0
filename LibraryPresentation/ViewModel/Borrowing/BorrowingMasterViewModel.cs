@@ -1,8 +1,4 @@
 ﻿using LibraryPresentation.Model.API;
-using LibraryPresentation.ViewModel.API;
-using LibraryPresentation.ViewModel.Borrowing.API;
-using LibraryPresentation.ViewModel.Command;
-using LibraryPresentation.ViewModel.Borrowing.API;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,7 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows;
 
-namespace LibraryPresentation.ViewModel.Borrowing
+namespace LibraryPresentation.ViewModel
 {
     internal class BorrowingMasterViewModel : IViewModel, IBorrowingMasterViewModel
     {
@@ -218,7 +214,7 @@ namespace LibraryPresentation.ViewModel.Borrowing
             }
         }
 
-        private async void LoadBorrowings()
+        private void LoadBorrowings()
         {
             Dictionary<int, IBorrowingModel> Borrowings = this._modelOperation.GetBorrowings();
 

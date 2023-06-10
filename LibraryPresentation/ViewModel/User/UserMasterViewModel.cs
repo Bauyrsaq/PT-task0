@@ -1,7 +1,4 @@
 ﻿using LibraryPresentation.Model.API;
-using LibraryPresentation.ViewModel.API;
-using LibraryPresentation.ViewModel.Command;
-using LibraryPresentation.ViewModel.User.API;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -10,9 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows;
-using LibraryPresentation.ViewModel.Command;
 
-namespace LibraryPresentation.ViewModel.User
+namespace LibraryPresentation.ViewModel
 {
     internal class UserMasterViewModel : IViewModel, IUserMasterViewModel
     {
@@ -160,7 +156,7 @@ namespace LibraryPresentation.ViewModel.User
             }
         }
 
-        private async void LoadUsers()
+        private void LoadUsers()
         {
             Dictionary<int, IUserModel> Users = this._modelOperation.GetUsers();
 

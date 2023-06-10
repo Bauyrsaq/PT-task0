@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
-namespace LibraryPresentation.ViewModel.Command
+namespace LibraryPresentation.ViewModel
 {
     internal class CloseApplicationCommand : ICommand
     {

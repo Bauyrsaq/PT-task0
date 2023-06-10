@@ -8,8 +8,6 @@ namespace LibraryLogicTest
     [TestClass]
     public class LogicTests
     {
-        //private readonly IDataRepository _dataRepository = new DataRepositoryMock();
-
         DataRepositoryMock _dataRepository = new DataRepositoryMock();
 
 

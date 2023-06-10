@@ -1,5 +1,4 @@
 ﻿using LibraryPresentation.Model.API;
-using LibraryPresentation.ViewModel.API;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -9,7 +8,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
-namespace LibraryPresentation.ViewModel.User.API
+namespace LibraryPresentation.ViewModel
 {
     public interface IUserMasterViewModel
     {
