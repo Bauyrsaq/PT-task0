@@ -15,7 +15,7 @@
             </ObjectDataProvider.ConstructorParameters>
         </ObjectDataProvider>
     </UserControl.DataContext>
-
+    
     <Grid Background="White" Margin="0,0,0,10">
 
         <GroupBox Width="220"

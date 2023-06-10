@@ -164,9 +164,9 @@ namespace LibraryPresentation.ViewModel
             {
                 this._books.Clear();
 
-                foreach (IBookModel u in Books.Values)
+                foreach (IBookModel b in Books.Values)
                 {
-                    this._books.Add(new BookDetailViewModel(u.Id, u.Author, u.Name));
+                    this._books.Add(new BookDetailViewModel(b.Id, b.Author, b.Name));
                 }
             });
 

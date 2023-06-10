@@ -15,7 +15,7 @@ namespace LibraryPresentation.ViewModel
 
         public HomeViewModel()
         {
-            this.StartAppCommand = new SwitchViewCommand("ProductMasterView");
+            this.StartAppCommand = new SwitchViewCommand("BookMasterView");
 
             this.ExitAppCommand = new CloseApplicationCommand();
         }
