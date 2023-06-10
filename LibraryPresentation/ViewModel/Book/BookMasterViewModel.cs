@@ -160,6 +160,13 @@ namespace LibraryPresentation.ViewModel
         {
             Dictionary<int, IBookModel> Books = this._modelOperation.GetBooks();
 
+            this._books.Clear();
+
+            foreach (IBookModel b in Books.Values)
+            {
+                this._books.Add(new BookDetailViewModel(b.Id, b.Author, b.Name));
+            }
+            /*
             Application.Current.Dispatcher.Invoke(() =>
             {
                 this._books.Clear();
@@ -169,6 +176,7 @@ namespace LibraryPresentation.ViewModel
                     this._books.Add(new BookDetailViewModel(b.Id, b.Author, b.Name));
                 }
             });
+            */
 
             OnPropertyChanged(nameof(Books));
         }

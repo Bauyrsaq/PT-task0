@@ -1,4 +1,5 @@
-﻿
+﻿using LibraryLogic;
+using LibraryLogic.API;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 namespace LibraryPresentationTest.Mock
 {
     internal class DataRepositoryMock
-    {/*
+    {
         public Dictionary<int, IUserDTO> Users = new Dictionary<int, IUserDTO>();
 
         public Dictionary<int, IBookDTO> Books = new Dictionary<int, IBookDTO>();
@@ -21,7 +22,7 @@ namespace LibraryPresentationTest.Mock
 
         public void AddUser(int userId, string name, string surname)
         {
-            this.Users.Add(userId, new UserMock(userId, name, surname));
+            this.Users.Add(userId, new UserDTOMock(userId, name, surname));
         }
 
         public IUserDTO GetUser(int userId)
@@ -57,7 +58,7 @@ namespace LibraryPresentationTest.Mock
 
         public void AddBook(int bookId, string author, string name)
         {
-            this.Books.Add(bookId, new BookMock(bookId, author, name));
+            this.Books.Add(bookId, new BookDTOMock(bookId, author, name));
         }
 
         public IBookDTO GetBook(int bookId)
@@ -93,7 +94,7 @@ namespace LibraryPresentationTest.Mock
 
         public void AddState(int stateId, int bookId, int bookQuantity)
         {
-            this.States.Add(stateId, new StateMock(stateId, bookId, bookQuantity));
+            this.States.Add(stateId, new StateDTOMock(stateId, bookId, bookQuantity));
         }
 
         public IStateDTO GetState(int stateId)
@@ -134,7 +135,7 @@ namespace LibraryPresentationTest.Mock
             IStateDTO state = this.GetState(stateId);
             IBookDTO book = this.GetBook(state.bookId);
 
-            this.Borrowings.Add(borrowingId, new BorrowingMock(borrowingId, userId, stateId, DateTime.Now, bookQuantity));
+            this.Borrowings.Add(borrowingId, new BorrowingDTOMock(borrowingId, userId, stateId, DateTime.Now, bookQuantity));
         }
 
         public IBorrowingDTO GetBorrowing(int borrowingId)
@@ -149,10 +150,10 @@ namespace LibraryPresentationTest.Mock
 
         public void UpdateBorrowing(int borrowingId, int userId, int stateId, DateTime Date, int? bookQuantity)
         {
-            ((BorrowingMock)this.Borrowings[borrowingId]).userId = userId;
-            ((BorrowingMock)this.Borrowings[borrowingId]).stateId = stateId;
-            ((BorrowingMock)this.Borrowings[borrowingId]).Date = Date;
-            ((BorrowingMock)this.Borrowings[borrowingId]).bookQuantity = bookQuantity ?? ((BorrowingMock)this.Borrowings[borrowingId]).bookQuantity;
+            ((BorrowingDTOMock)this.Borrowings[borrowingId]).userId = userId;
+            ((BorrowingDTOMock)this.Borrowings[borrowingId]).stateId = stateId;
+            ((BorrowingDTOMock)this.Borrowings[borrowingId]).Date = Date;
+            ((BorrowingDTOMock)this.Borrowings[borrowingId]).bookQuantity = bookQuantity ?? ((BorrowingDTOMock)this.Borrowings[borrowingId]).bookQuantity;
         }
 
         public void DeleteBorrowing(int borrowingId)
@@ -165,6 +166,6 @@ namespace LibraryPresentationTest.Mock
             return this.Borrowings.Count;
         }
 
-        #endregion*/
+        #endregion
     }
 }

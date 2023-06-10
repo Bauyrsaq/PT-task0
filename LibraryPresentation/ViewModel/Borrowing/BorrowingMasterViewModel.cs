@@ -218,6 +218,13 @@ namespace LibraryPresentation.ViewModel
         {
             Dictionary<int, IBorrowingModel> Borrowings = this._modelOperation.GetBorrowings();
 
+            this._borrowings.Clear();
+
+            foreach (IBorrowingModel b in Borrowings.Values)
+            {
+                this._borrowings.Add(new BorrowingDetailViewModel(b.Id, b.userId, b.stateId, b.Date, b.bookQuantity));
+            }
+            /*
             Application.Current.Dispatcher.Invoke(() =>
             {
                 this._borrowings.Clear();
@@ -227,6 +234,7 @@ namespace LibraryPresentation.ViewModel
                     this._borrowings.Add(new BorrowingDetailViewModel(b.Id, b.userId, b.stateId, b.Date, b.bookQuantity));
                 }
             });
+            */
 
             OnPropertyChanged(nameof(Borrowings));
         }

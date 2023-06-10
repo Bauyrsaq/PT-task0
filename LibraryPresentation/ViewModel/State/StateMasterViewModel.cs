@@ -161,6 +161,13 @@ namespace LibraryPresentation.ViewModel
         {
             Dictionary<int, IStateModel> States = this._modelOperation.GetStates();
 
+            this._states.Clear();
+
+            foreach (IStateModel u in States.Values)
+            {
+                this._states.Add(new StateDetailViewModel(u.Id, u.bookId, u.bookQuantity));
+            }
+            /*
             Application.Current.Dispatcher.Invoke(() =>
             {
                 this._states.Clear();
@@ -170,6 +177,7 @@ namespace LibraryPresentation.ViewModel
                     this._states.Add(new StateDetailViewModel(u.Id, u.bookId, u.bookQuantity));
                 }
             });
+            */
 
             OnPropertyChanged(nameof(States));
         }

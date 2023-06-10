@@ -160,7 +160,13 @@ namespace LibraryPresentation.ViewModel
         {
             Dictionary<int, IUserModel> Users = this._modelOperation.GetUsers();
 
-            Application.Current.Dispatcher.Invoke(() =>
+            this._users.Clear();
+
+            foreach (IUserModel u in Users.Values)
+            {
+                this._users.Add(new UserDetailViewModel(u.Id, u.Name, u.Surname));
+            }
+            /*Application.Current.Dispatcher.Invoke(() =>
             {
                 this._users.Clear();
 
@@ -168,7 +174,7 @@ namespace LibraryPresentation.ViewModel
                 {
                     this._users.Add(new UserDetailViewModel(u.Id, u.Name, u.Surname));
                 }
-            });
+            });*/
 
             OnPropertyChanged(nameof(Users));
         }
