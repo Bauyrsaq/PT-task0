@@ -7,14 +7,7 @@
              xmlns:viewmodels="clr-namespace:LibraryPresentation.ViewModel"
              mc:Ignorable="d" 
              Width="220" Height="320">
-    <UserControl.DataContext>
-        <ObjectDataProvider ObjectType="viewmodels:StateDetailViewModel">
-            <ObjectDataProvider.ConstructorParameters>
-                <x:Null/>
-                <x:Null/>
-            </ObjectDataProvider.ConstructorParameters>
-        </ObjectDataProvider>
-    </UserControl.DataContext>
+
     <Grid Background="White" Margin="0,0,0,86">
 
         <GroupBox Width="220"

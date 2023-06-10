@@ -7,15 +7,6 @@
              xmlns:viewmodels="clr-namespace:LibraryPresentation.ViewModel"
              mc:Ignorable="d" Width="220" Height="282">
 
-    <UserControl.DataContext>
-        <ObjectDataProvider ObjectType="viewmodels:BookDetailViewModel">
-            <ObjectDataProvider.ConstructorParameters>
-                <x:Null/>
-                <x:Null/>
-            </ObjectDataProvider.ConstructorParameters>
-        </ObjectDataProvider>
-    </UserControl.DataContext>
-    
     <Grid Background="White" Margin="0,0,0,10">
 
         <GroupBox Width="220"
