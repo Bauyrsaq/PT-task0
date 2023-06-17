@@ -1,4 +1,4 @@
-﻿using LibraryPresentation.Model.API;
+﻿using LibraryPresentation.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,8 +13,6 @@ namespace LibraryPresentation.ViewModel
         public ICommand UpdateState { get; set; }
 
         private readonly IStateModelOperation _modelOperation;
-
-        private readonly IErrorInformer _informer;
 
         private int _id;
 
@@ -52,15 +50,14 @@ namespace LibraryPresentation.ViewModel
             }
         }
 
-        public StateDetailViewModel(IStateModelOperation? model = null, IErrorInformer? informer = null)
+        public StateDetailViewModel(IStateModelOperation? model = null)
         {
             this.UpdateState = new OnClickCommand(e => this.Update(), c => this.CanUpdate());
 
             this._modelOperation = model ?? IStateModelOperation.CreateModelOperation();
-            this._informer = informer ?? new PopupErrorInformer();
         }
 
-        public StateDetailViewModel(int id, int bookId, int bookQuantity, IStateModelOperation? model = null, IErrorInformer? informer = null)
+        public StateDetailViewModel(int id, int bookId, int bookQuantity, IStateModelOperation? model = null)
         {
             this.Id = id;
             this.bookId = bookId;
@@ -69,14 +66,12 @@ namespace LibraryPresentation.ViewModel
             this.UpdateState = new OnClickCommand(e => this.Update(), c => this.CanUpdate());
 
             this._modelOperation = model ?? IStateModelOperation.CreateModelOperation();
-            this._informer = informer ?? new PopupErrorInformer();
         }
 
         private void Update()
         {
             this._modelOperation.UpdateState(this.Id, this.bookId, this.bookQuantity);
 
-            this._informer.InformSuccess("State successfully updated!");
         }
 
         private bool CanUpdate()

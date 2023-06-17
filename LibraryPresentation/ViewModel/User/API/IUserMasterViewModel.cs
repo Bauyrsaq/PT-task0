@@ -1,4 +1,4 @@
-﻿using LibraryPresentation.Model.API;
+﻿using LibraryPresentation.Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,9 +12,9 @@ namespace LibraryPresentation.ViewModel
 {
     public interface IUserMasterViewModel
     {
-        static IUserMasterViewModel CreateViewModel(IUserModelOperation operation, IErrorInformer informer)
+        static IUserMasterViewModel CreateViewModel(IUserModelOperation operation)
         {
-            return new UserMasterViewModel(operation, informer);
+            return new UserMasterViewModel(operation);
         }
 
         ICommand CreateUser { get; set; }
