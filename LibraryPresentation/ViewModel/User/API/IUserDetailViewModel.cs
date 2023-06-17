@@ -1,4 +1,4 @@
-﻿using LibraryPresentation.Model.API;
+﻿using LibraryPresentation.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,9 +11,9 @@ namespace LibraryPresentation.ViewModel
     public interface IUserDetailViewModel
     {
         static IUserDetailViewModel CreateViewModel(int id, string name, string surname,
-            IUserModelOperation model, IErrorInformer informer)
+            IUserModelOperation model)
         {
-            return new UserDetailViewModel(id, name, surname, model, informer);
+            return new UserDetailViewModel(id, name, surname, model);
         }
 
         ICommand UpdateUser {  get; set; }

@@ -1,4 +1,4 @@
-﻿using LibraryPresentation.Model.API;
+﻿using LibraryPresentation.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +14,7 @@ namespace LibraryPresentation.ViewModel
 
         private readonly IBookModelOperation _modelOperation;
 
-        private readonly IErrorInformer _informer;
+        
 
         private int _id;
 
@@ -52,15 +52,15 @@ namespace LibraryPresentation.ViewModel
             }
         }
 
-        public BookDetailViewModel(IBookModelOperation? model = null, IErrorInformer? informer = null)
+        public BookDetailViewModel(IBookModelOperation? model = null)
         {
             this.UpdateBook = new OnClickCommand(e => this.Update(), c => this.CanUpdate());
 
             this._modelOperation = model ?? IBookModelOperation.CreateModelOperation();
-            this._informer = informer ?? new PopupErrorInformer();
+            
         }
 
-        public BookDetailViewModel(int id, string author, string name, IBookModelOperation? model = null, IErrorInformer? informer = null)
+        public BookDetailViewModel(int id, string author, string name, IBookModelOperation? model = null)
         {
             this.Id = id;
             this.Author = author;
@@ -69,14 +69,13 @@ namespace LibraryPresentation.ViewModel
             this.UpdateBook = new OnClickCommand(e => this.Update(), c => this.CanUpdate());
 
             this._modelOperation = model ?? IBookModelOperation.CreateModelOperation();
-            this._informer = informer ?? new PopupErrorInformer();
+            
         }
 
         private void Update()
         {
             this._modelOperation.UpdateBook(this.Id, this.Author, this.Name);
 
-            this._informer.InformSuccess("Book successfully updated!");
         }
 
         private bool CanUpdate()

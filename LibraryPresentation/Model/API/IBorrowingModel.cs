@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LibraryPresentation.Model.API
+namespace LibraryPresentation.Model
 {
     public interface IBorrowingModel
     {

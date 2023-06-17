@@ -1,4 +1,4 @@
-﻿using LibraryPresentation.Model.API;
+﻿using LibraryPresentation.Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,9 +12,9 @@ namespace LibraryPresentation.ViewModel
 {
     public interface IStateMasterViewModel
     {
-        static IStateMasterViewModel CreateViewModel(IStateModelOperation operation, IErrorInformer informer)
+        static IStateMasterViewModel CreateViewModel(IStateModelOperation operation)
         {
-            return new StateMasterViewModel(operation, informer);
+            return new StateMasterViewModel(operation);
         }
 
         ICommand CreateState { get; set; }

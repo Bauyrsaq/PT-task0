@@ -1,4 +1,4 @@
-﻿using LibraryPresentation.Model.API;
+﻿using LibraryPresentation.Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -24,7 +24,7 @@ namespace LibraryPresentation.ViewModel
 
         private readonly IStateModelOperation _modelOperation;
 
-        private readonly IErrorInformer _informer;
+        
 
         private ObservableCollection<IStateDetailViewModel> _states;
 
@@ -102,7 +102,7 @@ namespace LibraryPresentation.ViewModel
             }
         }
 
-        public StateMasterViewModel(IStateModelOperation? model = null, IErrorInformer? informer = null)
+        public StateMasterViewModel(IStateModelOperation? model = null)
         {
             this.SwitchToUserMasterPage = new SwitchViewCommand("UserMasterView");
             this.SwitchToBookMasterPage = new SwitchViewCommand("BookMasterView");
@@ -114,7 +114,7 @@ namespace LibraryPresentation.ViewModel
             this.States = new ObservableCollection<IStateDetailViewModel>();
 
             this._modelOperation = model ?? IStateModelOperation.CreateModelOperation();
-            this._informer = informer ?? new PopupErrorInformer();
+            
 
             this.IsStateSelected = false;
 
@@ -136,7 +136,6 @@ namespace LibraryPresentation.ViewModel
 
             this._modelOperation.AddState(lastId, this.bookId, this.bookQuantity);
 
-            this._informer.InformSuccess("State successfully created!");
 
             this.LoadStates();
         }
@@ -147,13 +146,11 @@ namespace LibraryPresentation.ViewModel
             {
                 this._modelOperation.DeleteState(this.SelectedDetailViewModel.Id);
 
-                this._informer.InformSuccess("State successfully deleted!");
 
                 this.LoadStates();
             }
             catch (Exception e)
             {
-                this._informer.InformError("Error while deleting user! Remember to remove all associated events!");
             }
         }
 

@@ -1,4 +1,4 @@
-﻿using LibraryPresentation.Model.API;
+﻿using LibraryPresentation.Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,9 +12,9 @@ namespace LibraryPresentation.ViewModel
 {
     public interface IBorrowingMasterViewModel
     {
-        static IBorrowingMasterViewModel CreateViewModel(IBorrowingModelOperation operation, IErrorInformer informer)
+        static IBorrowingMasterViewModel CreateViewModel(IBorrowingModelOperation operation)
         {
-            return new BorrowingMasterViewModel(operation, informer);
+            return new BorrowingMasterViewModel(operation);
         }
 
         ICommand PurchaseBorrowing { get; set; }
