@@ -11,11 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibraryDataTest", "LibraryD
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibraryPresentationTest", "LibraryPresentationTest\LibraryPresentationTest.csproj", "{FB933D47-151C-4170-A52C-D9E956FB948B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibraryLogic", "LibraryLogic\LibraryLogic.csproj", "{CE6FC60E-7383-463B-9E11-30085A261702}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryLogic", "LibraryLogic\LibraryLogic.csproj", "{CE6FC60E-7383-463B-9E11-30085A261702}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibraryLogicTest", "LibraryLogicTest\LibraryLogicTest.csproj", "{B5A9B8FF-5700-47C2-8F4F-077EF1014BDF}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryPresentation.View", "LibraryPresentation.View\LibraryPresentation.View.csproj", "{000DA515-5567-4EC1-8590-62CEFA7E0BA1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryLogicTest", "LibraryLogicTest\LibraryLogicTest.csproj", "{B5A9B8FF-5700-47C2-8F4F-077EF1014BDF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,10 +45,6 @@ Global
 		{B5A9B8FF-5700-47C2-8F4F-077EF1014BDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B5A9B8FF-5700-47C2-8F4F-077EF1014BDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B5A9B8FF-5700-47C2-8F4F-077EF1014BDF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{000DA515-5567-4EC1-8590-62CEFA7E0BA1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{000DA515-5567-4EC1-8590-62CEFA7E0BA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{000DA515-5567-4EC1-8590-62CEFA7E0BA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{000DA515-5567-4EC1-8590-62CEFA7E0BA1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

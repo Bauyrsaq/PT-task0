@@ -1,4 +1,4 @@
-﻿using LibraryPresentation.Model;
+﻿using LibraryPresentation.Model.API;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,9 +12,9 @@ namespace LibraryPresentation.ViewModel
 {
     public interface IBookMasterViewModel
     {
-        static IBookMasterViewModel CreateViewModel(IBookModelOperation operation)
+        static IBookMasterViewModel CreateViewModel(IBookModelOperation operation, IErrorInformer informer)
         {
-            return new BookMasterViewModel(operation);
+            return new BookMasterViewModel(operation, informer);
         }
 
         ICommand CreateBook { get; set; }

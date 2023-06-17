@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using LibraryLogic.API;
 
-namespace LibraryPresentation.Model
+namespace LibraryPresentation.Model.API
 {
     public interface IUserModelOperation
     {

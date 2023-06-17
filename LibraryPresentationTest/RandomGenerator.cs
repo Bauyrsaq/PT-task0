@@ -1,4 +1,4 @@
-﻿using LibraryPresentation.Model;
+﻿using LibraryPresentation.Model.API;
 using LibraryPresentation.ViewModel;
 using LibraryPresentationTest.Mock;
 using LibraryPresentation;
@@ -12,6 +12,7 @@ namespace LibraryPresentationTest
 {
     internal class RandomGenerator : IGenerator
     {
+        private readonly IErrorInformer _informer = new TextErrorInformer();
 
         public void GenerateUserModels(IUserMasterViewModel viewModel)
         {
@@ -19,7 +20,7 @@ namespace LibraryPresentationTest
 
             for (int i = 1; i <= 10; i++)
             {
-                viewModel.Users.Add(IUserDetailViewModel.CreateViewModel(i, RandomString(10), RandomString(10), operation));
+                viewModel.Users.Add(IUserDetailViewModel.CreateViewModel(i, RandomString(10), RandomString(10), operation, _informer));
             }
         }
 
@@ -29,7 +30,7 @@ namespace LibraryPresentationTest
 
             for (int i = 1; i <= 10; i++)
             {
-                viewModel.Books.Add(IBookDetailViewModel.CreateViewModel(i, RandomString(10), RandomString(10), operation));
+                viewModel.Books.Add(IBookDetailViewModel.CreateViewModel(i, RandomString(10), RandomString(10), operation, _informer));
             }
         }
 
@@ -39,7 +40,7 @@ namespace LibraryPresentationTest
 
             for (int i = 1; i <= 10; i++)
             {
-                viewModel.States.Add(IStateDetailViewModel.CreateViewModel(i, i, RandomNumber<int>(2), operation));
+                viewModel.States.Add(IStateDetailViewModel.CreateViewModel(i, i, RandomNumber<int>(2), operation, _informer));
             }
         }
 
@@ -49,7 +50,7 @@ namespace LibraryPresentationTest
 
             for (int i = 1; i <= 10; i++)
             {
-                viewModel.Borrowings.Add(IBorrowingDetailViewModel.CreateViewModel(i, i, i, DateTime.Now, RandomNumber<int>(1), operation));
+                viewModel.Borrowings.Add(IBorrowingDetailViewModel.CreateViewModel(i, i, i, DateTime.Now, RandomNumber<int>(1), operation, _informer));
             }
         }
 
