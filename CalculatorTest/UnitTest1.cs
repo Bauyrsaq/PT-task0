@@ -14,5 +14,12 @@ namespace CalculatorTest
 
             Assert.AreEqual(4, result);
         }
+        public void TestMethod2()
+        {
+            var calculator = new Calculator();
+            var result = calculator.Substract(2, 2);
+
+            Assert.AreEqual(0, result);
+        }
     }
 }
