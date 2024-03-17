@@ -14,6 +14,7 @@ namespace CalculatorTest
 
             Assert.AreEqual(4, result);
         }
+        [TestMethod]
         public void TestMethod2()
         {
             var calculator = new Calculator();
