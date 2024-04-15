@@ -50,13 +50,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Data_layer\Data_layer.csproj">
+    <ProjectReference Include="..\Data_layer\LibraryData_layer.csproj">
       <Project>{e9fa33cf-ea1a-4364-866d-edf4857a8e0c}</Project>
-      <Name>Data_layer</Name>
+      <Name>LibraryData_layer</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Logic_layer\Logic_layer.csproj">
+    <ProjectReference Include="..\Logic_layer\LibraryLogic_layer.csproj">
       <Project>{b8517de5-a99c-436c-a751-75f837d43a8f}</Project>
-      <Name>Logic_layer</Name>
+      <Name>LibraryLogic_layer</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
