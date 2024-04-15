@@ -16,13 +16,13 @@ namespace LibraryData
         public Dictionary<int, Book> Catalog { get; } = new Dictionary<int, Book>();
 
         // Process state
-        public string ProcessState { get; set; }
+        public string? ProcessState { get; set; }
 
         // Collection of events
         public List<LibraryEvent> Events { get; } = new List<LibraryEvent>();
 
         // Method to add a user to the collection
-        public void AddUser(User user)
+        public override void AddUser(User user)
         {
             Users.Add(user);
         }
@@ -34,7 +34,7 @@ namespace LibraryData
         }
 
         // Method to add a book to the catalog
-        public void AddBook(int id, Book book)
+        public override void AddBook(int id, Book book)
         {
             Catalog[id] = book;
         }
@@ -55,6 +55,16 @@ namespace LibraryData
         public void RemoveEvent(LibraryEvent libraryEvent)
         {
             Events.Remove(libraryEvent);
+        }
+
+        public override void MarkBookAsBorrowed(int userId, int bookId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void MarkBookAsReturned(int userId, int bookId)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -9,7 +9,7 @@ namespace Data_layer_API
 {
     public abstract class LibraryData_layer_API
     {
-        public IEnumerable Users { get; set; }
+        public IEnumerable? Users { get; set; }
 
         public abstract void AddBook(int v, Book book);
         public abstract void AddUser(User user);
@@ -20,22 +20,22 @@ namespace Data_layer_API
         public class User
         {
             public int Id { get; set; }
-            public string Name { get; set; }
+            public string? Name { get; set; }
         }
 
         // Represents a book in the library catalog
         public class Book
         {
             public int Id { get; set; }
-            public string Title { get; set; }
-            public string Author { get; set; }
+            public string? Title { get; set; }
+            public string? Author { get; set; }
         }
 
         // Represents an event in the library (e.g., borrowing, returning)
         public class LibraryEvent
         {
             public int Id { get; set; }
-            public string Description { get; set; }
+            public string? Description { get; set; }
         }
     }
 }
