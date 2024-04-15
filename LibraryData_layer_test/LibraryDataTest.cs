@@ -8,12 +8,12 @@ namespace LibraryData_layer_test
     [TestFixture]
     public class LibraryDataTests
     {
-        private LibraryData_layer_API _library;
+        private LibraryData_layer _library;
 
         [SetUp]
         public void Initialize()
         {
-            _library = new LibraryData.LibraryData_layer();
+            _library = new LibraryData_layer();
             _library.AddUser(new User { Id = 1, Name = "John" });
             _library.AddBook(1, new Book { Id = 1, Title = "Book A", Author = "Author A" });
             // Add more initialization if needed
@@ -27,5 +27,13 @@ namespace LibraryData_layer_test
             CollectionAssert.Contains(_library.Users, new User { Id = 2, Name = "Alice" });
         }
 
+        [Test]
+        public void TestAddBook()
+        {
+            _library.AddBook(2, new Book { Id = 2, Title = "Alice in Wonderland", Author = "Lewis Carroll" });
+
+            // You probably meant to check Catalog, not Users
+            CollectionAssert.Contains(_library.Catalog.Values, new Book { Id = 2, Title = "Alice in Wonderland", Author = "Lewis Carroll" });
+        }
     }
 }

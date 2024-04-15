@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Data_layer\LibraryData_layer.csproj" />
+    <ProjectReference Include="..\LibraryLogic_layer\LibraryLogic_layer.csproj" />
   </ItemGroup>
 
   <ItemGroup>

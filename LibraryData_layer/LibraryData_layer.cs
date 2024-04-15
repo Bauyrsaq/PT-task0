@@ -59,12 +59,35 @@ namespace LibraryData
 
         public override void MarkBookAsBorrowed(int userId, int bookId)
         {
-            throw new NotImplementedException();
+            Book book = GetBookById(bookId);
+            if (book != null)
+            {
+                // Update the book status to borrowed
+                book.IsBorrowed = true;
+                // You might want to implement additional logic here, such as tracking who borrowed the book
+            }
+            else
+            {
+                // Handle the case where the book with the provided ID doesn't exist
+                throw new ArgumentException("Book not found in the catalog.");
+            }
         }
 
         public override void MarkBookAsReturned(int userId, int bookId)
         {
-            throw new NotImplementedException();
+            // Get the book from the catalog based on its ID
+            Book book = GetBookById(bookId);
+            if (book != null)
+            {
+                // Update the book status to returned
+                book.IsBorrowed = false;
+                // You might want to implement additional logic here, such as updating the borrower information
+            }
+            else
+            {
+                // Handle the case where the book with the provided ID doesn't exist
+                throw new ArgumentException("Book not found in the catalog.");
+            }
         }
     }
 }
