@@ -59,33 +59,28 @@ namespace LibraryData
 
         public override void MarkBookAsBorrowed(int userId, int bookId)
         {
-            Book book = GetBookById(bookId);
-            if (book != null)
+            if (Catalog.ContainsKey(bookId))
             {
-                // Update the book status to borrowed
-                book.IsBorrowed = true;
-                // You might want to implement additional logic here, such as tracking who borrowed the book
+                // Update the book's status to borrowed
+                Catalog[bookId].IsBorrowed = true;
+                // You may want to add additional logic here, such as recording the borrowing event
             }
             else
             {
-                // Handle the case where the book with the provided ID doesn't exist
                 throw new ArgumentException("Book not found in the catalog.");
             }
         }
 
         public override void MarkBookAsReturned(int userId, int bookId)
         {
-            // Get the book from the catalog based on its ID
-            Book book = GetBookById(bookId);
-            if (book != null)
+            if (Catalog.ContainsKey(bookId))
             {
-                // Update the book status to returned
-                book.IsBorrowed = false;
-                // You might want to implement additional logic here, such as updating the borrower information
+                // Update the book's status to not borrowed
+                Catalog[bookId].IsBorrowed = false;
+                // You may want to add additional logic here, such as recording the returning event
             }
             else
             {
-                // Handle the case where the book with the provided ID doesn't exist
                 throw new ArgumentException("Book not found in the catalog.");
             }
         }
