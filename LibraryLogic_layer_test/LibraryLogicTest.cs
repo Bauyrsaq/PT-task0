@@ -22,12 +22,14 @@ namespace LibraryLogic_layer_test
         [Test]
         public void TestBorrowBook()
         {
+            Assert.IsNotNull(_libraryLogic, "Library logic layer should be initialized.");
             _libraryLogic.BorrowBook(1, 1);
         }
 
         [Test]
         public void TestReturnBook()
         {
+            Assert.IsNotNull(_libraryLogic, "Library logic layer should be initialized.");
             _libraryLogic.ReturnBook(1, 1);
         }
     }
