@@ -16,7 +16,7 @@ namespace LibraryData
         public Dictionary<int, Book> Catalog { get; } = new Dictionary<int, Book>();
 
         // Process state
-        public string? ProcessState { get; set; }
+        public int ProcessState { get; set; }
 
         // Collection of events
         public List<LibraryEvent> Events { get; } = new List<LibraryEvent>();

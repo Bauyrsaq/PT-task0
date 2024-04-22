@@ -18,6 +18,9 @@ namespace Logic_layer_API
         }
 
         public abstract void BorrowBook(int userId, int bookId);
+
+        public abstract Book GetBookById(int bookId);
+
         public abstract void ReturnBook(int userId, int bookId);
     }
 }
