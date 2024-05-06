@@ -15,9 +15,6 @@ namespace LibraryData
         // Dictionary of books (catalog)
         public Dictionary<int, Book> Catalog { get; } = new Dictionary<int, Book>();
 
-        // Process state
-        public int ProcessState { get; set; }
-
         // Collection of events
         public List<LibraryEvent> Events { get; } = new List<LibraryEvent>();
 
