@@ -15,15 +15,49 @@ namespace LibraryData
 
         #region User
 
-        public override void AddUser(User User) { return ; }
+        public override void AddUser(User User) 
+        {
+            if (User != null)
+                Users.Add(User);
+            else
+                throw new ArgumentNullException();
+        }
 
-        public override User GetUser(int UserID) { return null ; }
+        public override User GetUser(int UserID) 
+        {
+            try 
+            {
+                return Users.Find(x => x.UserID == UserID);
+            }
+            catch(KeyNotFoundException)
+            {
+                return null;
+            }
+        }
 
-        public override List<User> GetUsers() { return null ; }
+        public override List<User> GetUsers()
+        {
+            return Users;
+        }
 
-        public override void UpdateUser(int UserID, User User) { return ; }
+        public override void UpdateUser(int UserID, User User)
+        {
+            if (User  == null)
+                throw new ArgumentNullException();
 
-        public override void DeleteUser(User User) { return; }
+            User tmp = Users.First(x => x.UserID == UserID);
+            if (tmp != null)
+            {
+                tmp.UserID = User.UserID;
+                tmp.Name = User.Name;
+                tmp.Surname = User.Surname;
+            }
+        }
+
+        public override void DeleteUser(User User)
+        {
+            Users.Remove(User);
+        }
 
         #endregion
 
