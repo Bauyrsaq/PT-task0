@@ -9,5 +9,6 @@ namespace LibraryData
     public partial class DataAPI
     {
         public List<User> Users = new List<User> ();
+        public Dictionary<int, Book> Catalog = new Dictionary<int, Book>();
     }
 }
