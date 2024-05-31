@@ -8,23 +8,23 @@ namespace LibraryData
 {
     public class Book
     {
-        public int Id { get; set; }
+        public int BookID { get; set; }
         public string Name { get; set; }
 
         public Book(int id, string name)
         {
-            Id = id; 
+            BookID = id; 
             Name = name;
         }
 
         public override string ToString()
         {
-            return "ID: " + Id + ", Title: " + Name;
+            return "ID: " + BookID + ", Title: " + Name;
         }
 
         public override int GetHashCode()
         {
-            int hashId = Id.GetHashCode();
+            int hashId = BookID.GetHashCode();
             int hashName = Name.GetHashCode();
             return hashId ^ hashName;
         }
