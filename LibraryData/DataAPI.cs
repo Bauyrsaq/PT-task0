@@ -12,5 +12,6 @@ namespace LibraryData
         public List<User> Users = new List<User> ();
         public Dictionary<int, Book> Catalog = new Dictionary<int, Book>();
         public List<State> States = new List<State> ();
+        public ObservableCollection<Borrowing> Borrowings = new ObservableCollection<Borrowing>();
     }
 }
