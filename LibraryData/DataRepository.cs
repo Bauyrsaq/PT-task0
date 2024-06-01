@@ -107,15 +107,41 @@ namespace LibraryData
 
         #region State
 
-        public override void AddState(State State) { return; }
+        public override void AddState(State State)
+        {
+            if (State != null)
+                States.Add(State);
+            else
+                throw new ArgumentNullException();
+        }
 
-        public override State GetState(int BookID) { return null; }
+        public override State GetState(int BookID)
+        {
+            return States.Find(x => x.Book.BookID == BookID);
+        }
 
-        public override List<State> GetStates() { return null; }
+        public override List<State> GetStates()
+        {
+            return States;
+        }
 
-        public override void UpdateState(int BookID, State State) { return; }
+        public override void UpdateState(int BookID, State State)
+        {
+            if (State == null)
+                throw new ArgumentNullException();
 
-        public override void DeleteState(State State) { return; }
+            State tmp = GetState(BookID);
+            if (tmp != null)
+            {
+                tmp.Book = State.Book;
+                tmp.Quantity = State.Quantity;
+            }
+        }
+
+        public override void DeleteState(State State)
+        {
+            States.Remove(State);
+        }
 
         #endregion
 
