@@ -64,15 +64,43 @@ namespace LibraryData
 
         #region Book
 
-        public override void AddBook(Book Book) { return; }
+        public override void AddBook(Book catalog)
+        {
+            if (catalog != null)
+                Catalog.Add(catalog.BookID, catalog);
+            else
+                throw new ArgumentNullException();
+        }
 
-        public override Book GetBook(int BookID) { return null; }
+        public override Book GetBook(int BookID)
+        {
+            try
+            {
+                return Catalog[BookID];
+            }
+            catch(KeyNotFoundException)
+            {
+                return null;
+            }
+        }
 
-        public override Dictionary<int, Book> GetBooks() { return null; }
+        public override Dictionary<int, Book> GetBooks()
+        {
+            return Catalog;
+        }
 
-        public override void UpdateBook(int BookID, Book Catalog) { return; }
+        public override void UpdateBook(int BookID, Book catalog)
+        {
+            if (catalog != null)
+                Catalog[BookID] = catalog;
+            else
+                throw new ArgumentNullException();
+        }
 
-        public override void DeleteBook(int BookID) { return; }
+        public override void DeleteBook(int BookID)
+        {
+            Catalog.Remove(BookID);
+        }
 
         #endregion
 
