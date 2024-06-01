@@ -53,7 +53,7 @@ namespace LibraryData.API
         public abstract Borrowing GetBorrowing(int UserID, int BookID);
         public abstract ObservableCollection<Borrowing> GetBorrowings();
         public abstract void UpdateBorrowing(int UserID, int BookID, Borrowing Borrowing);
-        public abstract void DeleteBorrowing(int UserID);
+        public abstract void DeleteBorrowing(Borrowing Borrowing);
 
         #endregion
     }

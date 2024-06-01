@@ -148,15 +148,52 @@ namespace LibraryData
 
         #region Borrowing
 
-        public override void AddBorrowing(Borrowing Borrowing) { return; }
+        public override void AddBorrowing(Borrowing Borrowing)
+        {
+            if (Borrowing.State.Quantity < 1)
+                throw new Exception("");
+            else
+                Borrowing.State.Quantity -= 1;
 
-        public override Borrowing GetBorrowing(int UserID, int BookID) { return null; }
+            if (Borrowing != null)
+                Borrowings.Add(Borrowing);
+            else
+                throw new ArgumentNullException();
+        }
 
-        public override ObservableCollection<Borrowing> GetBorrowings() { return null; }
+        public override Borrowing GetBorrowing(int UserID, int BookID)
+        {
+            try
+            {
+                IEnumerable<Borrowing> tmp = Borrowings.Where(x => x.User.UserID == UserID).Where(y => y.State.Book.BookID == BookID);
+                return tmp.First();
+            }
+            catch
+            {
+                return null;
+            }
+        }
 
-        public override void UpdateBorrowing(int UserID, int BookID, Borrowing Borrowing) { return; }
+        public override ObservableCollection<Borrowing> GetBorrowings()
+        {
+            return Borrowings;
+        }
 
-        public override void DeleteBorrowing(int UserID) { return; }
+        public override void UpdateBorrowing(int UserID, int BookID, Borrowing Borrowing)
+        {
+            Borrowing tmp = this.GetBorrowing(UserID, BookID);
+            if (tmp != null)
+            {
+                tmp.User = Borrowing.User;
+                tmp.Date = Borrowing.Date;
+                tmp.State = Borrowing.State;
+            }
+        }
+
+        public override void DeleteBorrowing(Borrowing Borrowing)
+        {
+            Borrowings.Remove(Borrowing);
+        }
 
         #endregion
     }
