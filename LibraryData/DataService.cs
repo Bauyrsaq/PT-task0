@@ -142,6 +142,23 @@ namespace LibraryData
             _dataRepository.DeleteBorrowing(Borrowing);
         }
 
+        public IEnumerable<Borrowing> BorrowingsForBook(Book Book)
+        {
+            if (Book == null)
+                throw new ArgumentNullException();
+            
+            return from events in _dataRepository.GetBorrowings()
+                   where events.State.Book == Book
+                   select events;
+        }
+
+        public IEnumerable<Borrowing> BorrowingsBetweenDates(DateTime StartDate, DateTime EndDate)
+        {
+            return from events in _dataRepository.GetBorrowings()
+                   where events.Date.Date >= StartDate.Date && events.Date.Date <= EndDate
+                   select events;
+        }
+
         #endregion
 
         #region Additional functions
@@ -166,6 +183,42 @@ namespace LibraryData
                     _dataRepository.UpdateState(element.State.Book.BookID, new State(element.State.Book, element.State.Quantity + 1));
                 }
             }
+        }
+
+        public void PrintRelatedData(IEnumerable<Borrowing> borrowings)
+        {
+            if (borrowings == null)
+                throw new ArgumentNullException();
+
+            StringBuilder sb = new StringBuilder();
+            int i = 0;
+            foreach (Borrowing b in borrowings)
+            {
+                sb.Append("Borrowing " + i + ":");
+                sb.Append(b.ToString());
+                sb.Append(Environment.NewLine);
+                i++;
+            }
+            Console.WriteLine(sb.ToString(0, sb.Length - 1));
+        }
+
+        public void PrintCatalog(IDictionary<int, Book> positions)
+        {
+            if (positions == null)
+                throw new ArgumentNullException();
+
+            StringBuilder sb = new StringBuilder();
+            foreach(KeyValuePair<int, Book> p in positions)
+            {
+                sb.Append(p.Key);
+                sb.Append(":");
+                sb.Append(p.Value.BookID);
+                sb.Append(",");
+                sb.Append(p.Value.Name);
+                sb.Append(Environment.NewLine);
+            }
+            Console.WriteLine(sb.ToString(0, sb.Length - 1));
+
         }
 
         #endregion
