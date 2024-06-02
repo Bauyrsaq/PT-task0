@@ -14,9 +14,9 @@ namespace LibraryData
 
         public Borrowing(User user, DateTime date, State state)
         {
-            User = user;
-            Date = date;
-            State = state;
+            this.User = user;
+            this.Date = date;
+            this.State = state;
         }
 
         public override string ToString()

@@ -13,8 +13,8 @@ namespace LibraryData
 
         public State(Book book, int quantity)
         {
-            Book = book;
-            Quantity = quantity;
+            this.Book = book;
+            this.Quantity = quantity;
         }
 
         public override string ToString()

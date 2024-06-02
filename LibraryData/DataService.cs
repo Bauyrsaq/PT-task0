@@ -10,13 +10,13 @@ namespace LibraryData
 {
     public class DataService
     {
-        private DataRepository _dataRepository = null;
+        private DataRepository _dataRepository;
 
         public DataService(DataRepository dataRepository)
         {
             if (dataRepository == null)
                 throw new ArgumentNullException(); 
-            this._dataRepository = dataRepository ;
+            this._dataRepository = dataRepository ?? throw new ArgumentNullException(nameof(dataRepository));
         }
 
         #region User
@@ -26,7 +26,7 @@ namespace LibraryData
             _dataRepository.AddUser(User);
         }
 
-        public User GetUser(int UserID)
+        public User? GetUser(int UserID)
         {
             return _dataRepository.GetUser(UserID);
         }
@@ -56,7 +56,7 @@ namespace LibraryData
             _dataRepository.AddBook(Book);
         }
 
-        public Book GetBook(int BookID)
+        public Book? GetBook(int BookID)
         {
             return _dataRepository.GetBook(BookID);
         }
@@ -86,7 +86,7 @@ namespace LibraryData
             _dataRepository.AddState(State);
         }
 
-        public State GetState(int BookID)
+        public State? GetState(int BookID)
         {
             return _dataRepository.GetState(BookID);
         }
@@ -121,7 +121,7 @@ namespace LibraryData
             _dataRepository.AddBorrowing(tmp);
         }
 
-        public Borrowing GetBorrowing(int UserID, int BookID)
+        public Borrowing? GetBorrowing(int UserID, int BookID)
         {
             return _dataRepository.GetBorrowing(UserID, BookID);
         }
@@ -163,7 +163,7 @@ namespace LibraryData
 
         #region Additional functions
 
-        public void OnAddCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        public void OnAddCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
         {
             if (e.NewItems != null)
             {
@@ -174,7 +174,7 @@ namespace LibraryData
             }
         }
 
-        public void OnDeleteCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        public void OnDeleteCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
         {
             if (e.OldItems != null)
             {

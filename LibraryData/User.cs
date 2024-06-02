@@ -14,9 +14,9 @@ namespace LibraryData
         
         public User(int id, string name, string surname)
         {
-            UserID = id;
-            Name = name;
-            Surname = surname;
+            this.UserID = id;
+            this.Name = name;
+            this.Surname = surname;
         }
 
         public override string ToString()

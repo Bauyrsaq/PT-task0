@@ -23,7 +23,7 @@ namespace LibraryData
                 throw new ArgumentNullException();
         }
 
-        public override User GetUser(int UserID) 
+        public override User? GetUser(int UserID) 
         {
             try 
             {
@@ -72,7 +72,7 @@ namespace LibraryData
                 throw new ArgumentNullException();
         }
 
-        public override Book GetBook(int BookID)
+        public override Book? GetBook(int BookID)
         {
             try
             {
@@ -115,7 +115,7 @@ namespace LibraryData
                 throw new ArgumentNullException();
         }
 
-        public override State GetState(int BookID)
+        public override State? GetState(int BookID)
         {
             return States.Find(x => x.Book.BookID == BookID);
         }
@@ -128,9 +128,9 @@ namespace LibraryData
         public override void UpdateState(int BookID, State State)
         {
             if (State == null)
-                throw new ArgumentNullException();
+                throw new ArgumentNullException(nameof(State));
 
-            State tmp = GetState(BookID);
+            State? tmp = GetState(BookID);
             if (tmp != null)
             {
                 tmp.Book = State.Book;
@@ -161,7 +161,7 @@ namespace LibraryData
                 throw new ArgumentNullException();
         }
 
-        public override Borrowing GetBorrowing(int UserID, int BookID)
+        public override Borrowing? GetBorrowing(int UserID, int BookID)
         {
             try
             {
@@ -181,7 +181,7 @@ namespace LibraryData
 
         public override void UpdateBorrowing(int UserID, int BookID, Borrowing Borrowing)
         {
-            Borrowing tmp = this.GetBorrowing(UserID, BookID);
+            Borrowing? tmp = this.GetBorrowing(UserID, BookID);
             if (tmp != null)
             {
                 tmp.User = Borrowing.User;

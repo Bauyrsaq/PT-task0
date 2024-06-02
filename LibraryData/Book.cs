@@ -13,8 +13,8 @@ namespace LibraryData
 
         public Book(int id, string name)
         {
-            BookID = id; 
-            Name = name;
+            this.BookID = id;
+            this.Name = name;
         }
 
         public override string ToString()
