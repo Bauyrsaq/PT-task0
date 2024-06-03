@@ -7,13 +7,8 @@ using System.Threading.Tasks;
 
 namespace LibraryData.API
 {
-    public abstract class IDataRepository
+    public interface IDataService
     {
-        static IDataRepository CreateDatabase(IDataContext? dataContext = null)
-        {
-            return new DataRepository(dataContext ?? new DataContext());
-        }
-
         #region User
 
         public abstract void AddUser(int userId, string name, string surname);

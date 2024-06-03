@@ -12,60 +12,53 @@ namespace LibraryData
 {
     public class DataRepository : IDataRepository
     {
-        private readonly DataContext _context;
+        private IDataContext _context;
 
-        public DataRepository(DataContext context)
+        public DataRepository(IDataContext context)
         {
-            _context = context ?? throw new ArgumentNullException(nameof(context));
+            this._context = context;
         }
 
         #region User
 
-        public override void AddUser(User User) 
+        public override void AddUser(int userId, string name, string surname) 
         {
-            if (User == null)
+            IUser user = new User(userId, name, surname);
+            _context.AddUser(user);
+        }
+
+        public override IUser? GetUser(int userId) 
+        {
+            IUser? user = this._context.GetUser(userId);
+
+            if (user is null)
+                throw new Exception("Doesn't exist");
+
+            return user;
+        }
+
+        public override Dictionary<int, IUser> GetUsers()
+        {
+            return _context.GetUsers();
+        }
+
+        public override void UpdateUser(int userId, string name, string surname)
+        {
+
+            IUser user = new User(userId, name, surname);
+
+            if (this.GetUser(userId) == null)
+                throw new ArgumentNullException("Doesn't exist");
+
+            this._context.UpdateUser(user);
+        }
+
+        public override void DeleteUser(int userId)
+        {
+            if (this.GetUser(userId) == null)
                 throw new ArgumentNullException(nameof(User));
-            _context.Users.Add(User);
-            _context.SaveChanges();
-        }
 
-        public override User? GetUser(int userId) 
-        {
-            try 
-            {
-                return _context.Users.Find(userId);
-            }
-            catch(KeyNotFoundException)
-            {
-                return null;
-            }
-        }
-
-        public override List<User> GetUsers()
-        {
-            return _context.Users.ToList();
-        }
-
-        public override void UpdateUser(int userId, User User)
-        {
-            if (User  == null)
-                throw new ArgumentNullException(nameof(User));
-
-            var tmp = _context.Users.Find(userId);
-            if (tmp != null)
-            {
-                tmp.Name = User.Name;
-                tmp.Surname = User.Surname;
-                _context.SaveChanges();
-            }
-        }
-
-        public override void DeleteUser(User User)
-        {
-            if (User == null)
-                throw new ArgumentNullException(nameof(User));
-            _context.Users.Remove(User);
-            _context.SaveChanges();
+            this._context.DeleteUser(userId);
         }
 
         #endregion

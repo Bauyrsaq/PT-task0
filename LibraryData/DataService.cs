@@ -11,7 +11,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace LibraryData
 {
-    public class DataService
+    public class DataService : IDataService
     {
         private readonly IDataRepository _dataRepository;
 
@@ -24,44 +24,29 @@ namespace LibraryData
 
         #region User
 
-        public void AddUser(string name, string surname)
+        public void AddUser(int userId, string name, string surname)
         {
-            var user = new User
-            {
-                Name = name,
-                Surname = surname
-            };
-            _dataRepository.AddUser(user);
+            _dataRepository.AddUser(userId, name, surname);
         }
 
-        public User? GetUser(int userId)
+        public IUser? GetUser(int userId)
         {
             return _dataRepository.GetUser(userId);
         }
 
-        public List<User> GetUsers()
+        public Dictionary<int, IUser> GetUsers()
         {
             return _dataRepository.GetUsers();
         }
 
         public void UpdateUser(int userId, string name, string surname)
         {
-            var user = _dataRepository.GetUser(userId);
-            if (user != null)
-            {
-                user.Name = name;
-                user.Surname = surname;
-                _dataRepository.UpdateUser(userId, user);
-            }
+            _dataRepository.UpdateUser(userId, name, surname);
         }
 
         public void DeleteUser(int userId)
         {
-            var user = _dataRepository.GetUser(userId);
-            if (user != null)
-            {
-                _dataRepository.DeleteUser(user);
-            }
+            _dataRepository.DeleteUser(userId);
         }
 
         #endregion

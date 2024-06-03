@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="LibraryDB" Class="LibraryDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Table Name="dbo.Users" Member="Users">
+    <Type Name="User">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="Surname" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
+      <Association Name="User_Borrowing" Member="Borrowings" ThisKey="Id" OtherKey="userId" Type="Borrowing" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Books" Member="Books">
+    <Type Name="Book">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
+      <Association Name="Book_State" Member="States" ThisKey="Id" OtherKey="BookId" Type="State" />
+    </Type>
+  </Table>
+  <Table Name="dbo.States" Member="States">
+    <Type Name="State">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="BookId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="bookQuantity" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="State_Borrowing" Member="Borrowings" ThisKey="Id" OtherKey="stateId" Type="Borrowing" />
+      <Association Name="Book_State" Member="Book" ThisKey="BookId" OtherKey="Id" Type="Book" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Borrowings" Member="Borrowings">
+    <Type Name="Borrowing">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="userId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="stateId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Date" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="bookQuantity" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="State_Borrowing" Member="State" ThisKey="stateId" OtherKey="Id" Type="State" IsForeignKey="true" />
+      <Association Name="User_Borrowing" Member="User" ThisKey="userId" OtherKey="Id" Type="User" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>

@@ -17,4 +17,23 @@
     <PackageReference Include="MTRANSLATE.LinqToSql" Version="1.0.5" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Service Include="{3259aa49-8aa1-44d3-9025-a0b520596a8c}" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Database\Library.designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Library.dbml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Database\Library.dbml">
+      <Generator>MSLinqToSQLGenerator</Generator>
+      <LastGenOutput>Library.designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
 </Project>

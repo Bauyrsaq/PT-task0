@@ -1,25 +1,22 @@
 ﻿using LibraryData.API;
+using LibraryData.Database;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace LibraryData
 {
-    public class DataContext : DbContext, IDataContext
+    public class DataContext : IDataContext
     {
         private readonly string ConnectionString;
 
-        public DbSet<User> Users { get; set; }
-        public DbSet<Book> Books { get; set; }
-        public DbSet<State> States { get; set; }
-        public DbSet<Borrowing> Borrowings { get; set; }
-
         public DataContext(string? connectionString = null)
         {
-            if (connectionString == null)
+            if (connectionString is null)
             {
                 string _projectRootDir = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName;
                 string _DBRelativePath = @"Database\LibraryDB.mdf";
@@ -32,14 +29,109 @@ namespace LibraryData
             }
         }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        #region User
+
+        public void AddUser(IUser user)
         {
-            optionsBuilder.UseSqlServer(this.ConnectionString);
+            using (LibraryDataContext context = new LibraryDataContext(this.ConnectionString))
+            {
+                Database.User entity = new Database.User()
+                {
+                    Id = user.Id,
+                    Name = user.Name,
+                    Surname = user.Surname,
+                };
+
+                context.Users.InsertOnSubmit(entity);
+                context.SubmitChanges();
+            }
         }
 
-        public void SaveChanges()
+        public User? GetUser(int userId)
         {
-            base.SaveChanges();
+            using (LibraryDataContext context = new LibraryDataContext(this.ConnectionString))
+            {
+                IQueryable<Database.User> query =
+                    from u in context.Users
+                    where u.Id == userId
+                    select u;
+
+                Database.User? user = query.FirstOrDefault();
+
+                return user is not null ? new User(user.Id, user.Name, user.Surname) : null;
+            }
         }
+
+        public Dictionary<int, IUser> GetUsers()
+        {
+            using (LibraryDataContext context = new LibraryDataContext(this.ConnectionString))
+            {
+                IQueryable<IUser> query =
+                    from u in context.Users
+                    select new User(u.Id, u.Name, u.Surname) as IUser;
+
+                return query.ToDictionary(k => k.Id);
+            }
+        }
+
+        public void UpdateUser(IUser user)
+        {
+            using (LibraryDataContext context = new LibraryDataContext(this.ConnectionString))
+            {
+                Database.User toUpdate = (from u in context.Users where u.Id == user.Id select u).FirstOrDefault()!;
+
+                toUpdate.Name = user.Name;
+                toUpdate.Surname = user.Surname;
+
+                context.SubmitChanges();
+            }
+        }
+
+        public void DeleteUser(int userId)
+        {
+            using (LibraryDataContext context = new LibraryDataContext(this.ConnectionString))
+            {
+                Database.User toDelete = (from u in context.Users where u.Id == userId select u).FirstOrDefault()!;
+
+                context.Users.DeleteOnSubmit(toDelete);
+
+                context.SubmitChanges();
+            }
+        }
+
+        #endregion
+
+
+        #region Book
+
+        void AddBook(IBook book);
+        Book? GetBook(int bookId);
+        Dictionary<int, Book> GetBooks();
+        void UpdateBook(IBook book);
+        void DeleteBook(int bookId);
+
+        #endregion
+
+
+        #region State
+
+        void AddState(IState state);
+        State? GetState(int stateId);
+        List<State> GetStates();
+        void UpdateState(IState state);
+        void DeleteState(int stateId);
+
+        #endregion
+
+
+        #region Borrowing
+
+        void AddBorrowing(IBorrowing borrowing);
+        Borrowing? GetBorrowing(int borrowingId);
+        ObservableCollection<Borrowing> GetBorrowings();
+        void UpdateBorrowing(IBorrowing borrowing);
+        void DeleteBorrowing(int borrowingId);
+
+        #endregion
     }
 }
