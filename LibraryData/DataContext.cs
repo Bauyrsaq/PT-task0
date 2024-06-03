@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -47,7 +48,7 @@ namespace LibraryData
             }
         }
 
-        public User? GetUser(int userId)
+        public IUser? GetUser(int userId)
         {
             using (LibraryDataContext context = new LibraryDataContext(this.ConnectionString))
             {
@@ -104,7 +105,7 @@ namespace LibraryData
 
         #region Book
 
-        void AddBook(IBook book)
+        public void AddBook(IBook book)
         {
             using (LibraryDataContext context = new LibraryDataContext(this.ConnectionString))
             {
@@ -119,7 +120,7 @@ namespace LibraryData
             }
         }
 
-        IBook? GetBook(int bookId)
+        public IBook? GetBook(int bookId)
         {
             using (LibraryDataContext context = new LibraryDataContext(this.ConnectionString))
             {
@@ -134,7 +135,7 @@ namespace LibraryData
             }
         }
 
-        Dictionary<int, IBook> GetBooks()
+        public Dictionary<int, IBook> GetBooks()
         {
             using (LibraryDataContext context = new LibraryDataContext(this.ConnectionString))
             {
@@ -146,7 +147,7 @@ namespace LibraryData
             }
         }
 
-        void UpdateBook(IBook book)
+        public void UpdateBook(IBook book)
         {
             using (LibraryDataContext context = new LibraryDataContext(this.ConnectionString))
             {
@@ -158,7 +159,7 @@ namespace LibraryData
             }
         }
 
-        void DeleteBook(int bookId)
+        public void DeleteBook(int bookId)
         {
             using (LibraryDataContext context = new LibraryDataContext(this.ConnectionString))
             {
@@ -175,22 +176,150 @@ namespace LibraryData
 
         #region State
 
-        void AddState(IState state);
-        State? GetState(int stateId);
-        List<State> GetStates();
-        void UpdateState(IState state);
-        void DeleteState(int stateId);
+        public void AddState(IState state)
+        {
+            using (LibraryDataContext context = new LibraryDataContext(this.ConnectionString))
+            {
+                Database.State entity = new Database.State()
+                {
+                    Id = state.Id,
+                    BookId = state.bookId,
+                    bookQuantity = state.bookQuantity,
+                };
+
+                context.States.InsertOnSubmit(entity);
+                context.SubmitChanges();
+            }
+        }
+
+        public IState? GetState(int stateId)
+        {
+            using (LibraryDataContext context = new LibraryDataContext(this.ConnectionString))
+            {
+                IQueryable<Database.State> query =
+                    from s in context.States
+                    where s.Id == stateId
+                    select s;
+
+                Database.State? state = query.FirstOrDefault();
+
+                return state is not null ? new State(state.Id, state.BookId, state.bookQuantity) : null;
+            }
+        }
+
+        public Dictionary<int, IState> GetStates()
+        {
+            using (LibraryDataContext context = new LibraryDataContext(this.ConnectionString))
+            {
+                IQueryable<IState> query =
+                    from s in context.States
+                    select new State(s.Id, s.BookId, s.bookQuantity) as IState;
+
+                return query.ToDictionary(k => k.Id);
+            }
+        }
+
+        public void UpdateState(IState state)
+        {
+            using (LibraryDataContext context = new LibraryDataContext(this.ConnectionString))
+            {
+                Database.State toUpdate = (from s in context.States where s.Id == state.Id select s).FirstOrDefault()!;
+
+                toUpdate.BookId = state.bookId;
+                toUpdate.bookQuantity = state.bookQuantity;
+
+                context.SubmitChanges();
+            }
+        }
+
+        public void DeleteState(int stateId)
+        {
+            using (LibraryDataContext context = new LibraryDataContext(this.ConnectionString))
+            {
+                Database.State toDelete = (from s in context.States where s.Id == stateId select s).FirstOrDefault()!;
+
+                context.States.DeleteOnSubmit(toDelete);
+
+                context.SubmitChanges();
+            }
+        }
 
         #endregion
 
 
         #region Borrowing
 
-        void AddBorrowing(IBorrowing borrowing);
-        Borrowing? GetBorrowing(int borrowingId);
-        ObservableCollection<Borrowing> GetBorrowings();
-        void UpdateBorrowing(IBorrowing borrowing);
-        void DeleteBorrowing(int borrowingId);
+        public void AddBorrowing(IBorrowing borrowing)
+        {
+            using (LibraryDataContext context = new LibraryDataContext(this.ConnectionString))
+            {
+                Database.Borrowing entity = new Database.Borrowing()
+                {
+                    Id = borrowing.Id,
+                    userId = borrowing.userId,
+                    stateId = borrowing.stateId,
+                    Date = borrowing.Date,
+                    bookQuantity = borrowing.bookQuantity,
+                };
+
+                context.Borrowings.InsertOnSubmit(entity);
+                context.SubmitChanges();
+            }
+        }
+
+        public IBorrowing? GetBorrowing(int borrowingId)
+        {
+            using (LibraryDataContext context = new LibraryDataContext(this.ConnectionString))
+            {
+                IQueryable<Database.Borrowing> query =
+                    from b in context.Borrowings
+                    where b.Id == borrowingId
+                    select b;
+
+                Database.Borrowing? borrowing = query.FirstOrDefault();
+
+                return borrowing is not null ? new Borrowing(borrowing.Id, borrowing.userId, borrowing.stateId, borrowing.Date, borrowing.bookQuantity) : null;
+            }
+        }
+
+        public Dictionary<int, IBorrowing> GetBorrowings()
+        {
+            using (LibraryDataContext context = new LibraryDataContext(this.ConnectionString))
+            {
+                IQueryable<IBorrowing> query =
+                    from b in context.Borrowings
+                    select new Borrowing(b.Id, b.userId, b.stateId, b.Date, b.bookQuantity) as IBorrowing;
+
+                return query.ToDictionary(k => k.Id);
+            }
+        }
+
+        public void UpdateBorrowing(IBorrowing borrowing)
+        {
+            using (LibraryDataContext context = new LibraryDataContext(this.ConnectionString))
+            {
+                Database.Borrowing toUpdate = (from b in context.Borrowings where b.Id == borrowing.Id select b).FirstOrDefault()!;
+
+                toUpdate.userId = borrowing.userId;
+                toUpdate.stateId = borrowing.stateId;
+                toUpdate.Date = borrowing.Date;
+                toUpdate.bookQuantity = borrowing.bookQuantity;
+
+                context.SubmitChanges();
+            }
+        }
+
+        public void DeleteBorrowing(int borrowingId)
+        {
+            using (LibraryDataContext context = new LibraryDataContext(this.ConnectionString))
+            {
+                Database.Borrowing toDelete = (from b in context.Borrowings where b.Id == borrowingId select b).FirstOrDefault()!;
+
+                context.Borrowings.DeleteOnSubmit(toDelete);
+
+                context.SubmitChanges();
+            }
+        }
 
         #endregion
     }
