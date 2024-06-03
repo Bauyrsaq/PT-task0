@@ -1,10 +1,13 @@
-﻿using System;
+﻿using LibraryData.API;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace LibraryData
 {
@@ -26,9 +29,9 @@ namespace LibraryData
             _dataRepository.AddUser(User);
         }
 
-        public User? GetUser(int UserID)
+        public User? GetUser(int userId)
         {
-            return _dataRepository.GetUser(UserID);
+            return _dataRepository.GetUser(userId);
         }
 
         public List<User> GetUsers()
@@ -36,9 +39,9 @@ namespace LibraryData
             return _dataRepository.GetUsers();
         }
 
-        public void UpdateUser(int UserID, User User)
+        public void UpdateUser(int userId, User User)
         {
-            _dataRepository.UpdateUser(UserID, User);
+            _dataRepository.UpdateUser(userId, User);
         }
 
         public void DeleteUser(User User)
@@ -56,9 +59,9 @@ namespace LibraryData
             _dataRepository.AddBook(Book);
         }
 
-        public Book? GetBook(int BookID)
+        public Book? GetBook(int bookId)
         {
-            return _dataRepository.GetBook(BookID);
+            return _dataRepository.GetBook(bookId);
         }
 
         public Dictionary<int, Book> GetBooks()
@@ -66,14 +69,14 @@ namespace LibraryData
             return _dataRepository.GetBooks();
         }
 
-        public void UpdateBook(int BookID, Book Book)
+        public void UpdateBook(int bookId, Book Book)
         {
-            _dataRepository.UpdateBook(BookID, Book);
+            _dataRepository.UpdateBook(bookId, Book);
         }
 
-        public void DeleteBook(int BookID)
+        public void DeleteBook(int bookId)
         {
-            _dataRepository.DeleteBook(BookID);
+            _dataRepository.DeleteBook(bookId);
         }
 
         #endregion
@@ -86,9 +89,9 @@ namespace LibraryData
             _dataRepository.AddState(State);
         }
 
-        public State? GetState(int BookID)
+        public State? GetState(int stateId)
         {
-            return _dataRepository.GetState(BookID);
+            return _dataRepository.GetState(stateId);
         }
 
         public List<State> GetStates()
@@ -96,9 +99,9 @@ namespace LibraryData
             return _dataRepository.GetStates();
         }
 
-        public void UpdateState(int BookID, State State)
+        public void UpdateState(int stateId, State State)
         {
-            _dataRepository.UpdateState(BookID, State);
+            _dataRepository.UpdateState(stateId, State);
         }
 
         public void DeleteState(State State)
@@ -111,19 +114,21 @@ namespace LibraryData
 
         #region Borrowing
 
-        public void AddBorrowing(User User, State State)
+        public void AddBorrowing(int id, int userId, int stateId, int bookQuantity = 0)
         {
-            if (User == null || State == null)
+            User? user = GetUser(userId);
+            State? state = GetState(bookQuantity);
+            if (user == null || state == null)
                 throw new ArgumentNullException();
 
-            Borrowing tmp = new Borrowing(User, DateTime.Now.Date, State);
+            Borrowing tmp = new Borrowing(id, userId, stateId, DateTime.Now.Date, bookQuantity);
             _dataRepository.GetBorrowings().CollectionChanged += OnAddCollectionChanged;
             _dataRepository.AddBorrowing(tmp);
         }
 
-        public Borrowing? GetBorrowing(int UserID, int BookID)
+        public Borrowing? GetBorrowing(int userId, int bookId)
         {
-            return _dataRepository.GetBorrowing(UserID, BookID);
+            return _dataRepository.GetBorrowing(userId, bookId);
         }
 
         public ObservableCollection<Borrowing> GetBorrowings()
@@ -131,9 +136,9 @@ namespace LibraryData
             return _dataRepository.GetBorrowings();
         }
 
-        public void UpdateBorrowing(int UserID, int BookID, Borrowing Borrowing)
+        public void UpdateBorrowing(int stateId, int userId, int bookId, Borrowing Borrowing)
         {
-            _dataRepository.UpdateBorrowing(UserID, BookID, Borrowing);
+            _dataRepository.UpdateBorrowing(stateId, bookId, userId, stateId, DateTime.Now.Date, Borrowing.bookQuantity);
         }
 
         public void DeleteBorrowing(Borrowing Borrowing)
@@ -142,13 +147,15 @@ namespace LibraryData
             _dataRepository.DeleteBorrowing(Borrowing);
         }
 
-        public IEnumerable<Borrowing> BorrowingsForBook(Book Book)
+        public IEnumerable<Borrowing> BorrowingsForBook(Book Book, State State)
         {
             if (Book == null)
                 throw new ArgumentNullException();
-            
+
+            State? state = _dataRepository.States.FirstOrDefault(s => s.Id == State.Id);
+            if (state == null) throw new ArgumentNullException(); 
             return from events in _dataRepository.GetBorrowings()
-                   where events.State.Book == Book
+                   where state.bookId == Book.Id
                    select events;
         }
 
@@ -169,7 +176,9 @@ namespace LibraryData
             {
                 foreach (Borrowing element in e.NewItems)
                 {
-                    _dataRepository.UpdateState(element.State.Book.BookID, new State(element.State.Book, element.State.Quantity - 1));
+                    State? state = _dataRepository.States.FirstOrDefault(s => s.Id == element.stateId);
+                    if (state == null) throw new ArgumentNullException();
+                    _dataRepository.UpdateState(element.stateId, new State(element.stateId, state.bookId, element.bookQuantity + 1));
                 }
             }
         }
@@ -180,7 +189,9 @@ namespace LibraryData
             {
                 foreach (Borrowing element in e.OldItems)
                 {
-                    _dataRepository.UpdateState(element.State.Book.BookID, new State(element.State.Book, element.State.Quantity + 1));
+                    State? state = _dataRepository.States.FirstOrDefault(s => s.Id == element.stateId);
+                    if (state == null) throw new ArgumentNullException();
+                    _dataRepository.UpdateState(element.stateId, new State(element.stateId, state.bookId, element.bookQuantity - 1));
                 }
             }
         }
@@ -212,7 +223,7 @@ namespace LibraryData
             {
                 sb.Append(p.Key);
                 sb.Append(":");
-                sb.Append(p.Value.BookID);
+                sb.Append(p.Value.Id);
                 sb.Append(",");
                 sb.Append(p.Value.Name);
                 sb.Append(Environment.NewLine);

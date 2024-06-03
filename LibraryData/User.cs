@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LibraryData.API;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,27 +7,27 @@ using System.Threading.Tasks;
 
 namespace LibraryData
 {
-    public class User
+    public class User : IUser
     {
-        public int UserID { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
         
         public User(int id, string name, string surname)
         {
-            this.UserID = id;
+            this.Id = id;
             this.Name = name;
             this.Surname = surname;
         }
 
         public override string ToString()
         {
-            return UserID + ": " + Name + " " + Surname;
+            return Id + ": " + Name + " " + Surname;
         }
 
         public override int GetHashCode()
         {
-            int hashId = UserID.GetHashCode();
+            int hashId = Id.GetHashCode();
             int hashName = Name.GetHashCode();
             int hashSurname = Surname.GetHashCode();
             return hashId ^ hashName ^ hashSurname;

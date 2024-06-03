@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LibraryData.API;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,27 +7,30 @@ using System.Threading.Tasks;
 
 namespace LibraryData
 {
-    public class State
+    public class State : IState
     {
-        public Book Book { get; set; }
-        public int Quantity { get; set; }
+        public int Id { get; set; }
+        public int bookId { get; set; }
+        public int bookQuantity { get; set; }
 
-        public State(Book book, int quantity)
+        public State(int id, int bookId, int bookQuantity)
         {
-            this.Book = book;
-            this.Quantity = quantity;
+            this.Id = id;
+            this.bookId = bookId;
+            this.bookQuantity = bookQuantity;
         }
 
         public override string ToString()
         {
-            return Book.ToString() + " Quantity: " + Quantity;
+            return Id + " " + bookId + " Quantity: " + bookQuantity;
         }
 
         public override int GetHashCode()
         {
-            int hashBook = Book.GetHashCode();
-            int hashQuantity = Quantity.GetHashCode();
-            return hashBook ^ hashQuantity;
+            int hadhId = Id.GetHashCode();
+            int hashbookId = bookId.GetHashCode();
+            int hashbookQuantity = bookQuantity.GetHashCode();
+            return hadhId ^ hashbookId ^ hashbookQuantity;
         }
     }
 }

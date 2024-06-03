@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using LibraryData.API;
@@ -11,7 +12,11 @@ namespace LibraryData
 {
     public class DataRepository : IDataRepository
     {
-        
+        public List<User> Users = new List<User>();
+        public Dictionary<int, Book> Catalog = new Dictionary<int, Book>();
+        public List<State> States = new List<State>();
+        public ObservableCollection<Borrowing> Borrowings = new ObservableCollection<Borrowing>();
+
 
         #region User
 
@@ -23,11 +28,11 @@ namespace LibraryData
                 throw new ArgumentNullException();
         }
 
-        public override User? GetUser(int UserID) 
+        public override User? GetUser(int userId) 
         {
             try 
             {
-                return Users.Find(x => x.UserID == UserID);
+                return Users.Find(x => x.Id == userId);
             }
             catch(KeyNotFoundException)
             {
@@ -40,15 +45,15 @@ namespace LibraryData
             return Users;
         }
 
-        public override void UpdateUser(int UserID, User User)
+        public override void UpdateUser(int userId, User User)
         {
             if (User  == null)
                 throw new ArgumentNullException();
 
-            User tmp = Users.First(x => x.UserID == UserID);
+            User tmp = Users.First(x => x.Id == userId);
             if (tmp != null)
             {
-                tmp.UserID = User.UserID;
+                tmp.Id = User.Id;
                 tmp.Name = User.Name;
                 tmp.Surname = User.Surname;
             }
@@ -64,19 +69,19 @@ namespace LibraryData
 
         #region Book
 
-        public override void AddBook(Book catalog)
+        public override void AddBook(Book Book)
         {
-            if (catalog != null)
-                Catalog.Add(catalog.BookID, catalog);
+            if (Book != null)
+                Catalog.Add(Book.Id, Book);
             else
                 throw new ArgumentNullException();
         }
 
-        public override Book? GetBook(int BookID)
+        public override Book? GetBook(int bookId)
         {
             try
             {
-                return Catalog[BookID];
+                return Catalog[bookId];
             }
             catch(KeyNotFoundException)
             {
@@ -89,17 +94,17 @@ namespace LibraryData
             return Catalog;
         }
 
-        public override void UpdateBook(int BookID, Book catalog)
+        public override void UpdateBook(int bookId, Book Book)
         {
-            if (catalog != null)
-                Catalog[BookID] = catalog;
+            if (Book != null)
+                Catalog[bookId] = Book;
             else
                 throw new ArgumentNullException();
         }
 
-        public override void DeleteBook(int BookID)
+        public override void DeleteBook(int bookId)
         {
-            Catalog.Remove(BookID);
+            Catalog.Remove(bookId);
         }
 
         #endregion
@@ -115,9 +120,9 @@ namespace LibraryData
                 throw new ArgumentNullException();
         }
 
-        public override State? GetState(int BookID)
+        public override State? GetState(int stateId)
         {
-            return States.Find(x => x.Book.BookID == BookID);
+            return States.Find(x => x.Id == stateId);
         }
 
         public override List<State> GetStates()
@@ -125,17 +130,12 @@ namespace LibraryData
             return States;
         }
 
-        public override void UpdateState(int BookID, State State)
+        public override void UpdateState(int stateId, State State)
         {
-            if (State == null)
-                throw new ArgumentNullException(nameof(State));
-
-            State? tmp = GetState(BookID);
-            if (tmp != null)
-            {
-                tmp.Book = State.Book;
-                tmp.Quantity = State.Quantity;
-            }
+            if (State != null)
+                States[stateId] = State;
+            else
+                throw new ArgumentNullException();
         }
 
         public override void DeleteState(State State)
@@ -150,10 +150,10 @@ namespace LibraryData
 
         public override void AddBorrowing(Borrowing Borrowing)
         {
-            if (Borrowing.State.Quantity < 1)
-                throw new Exception("");
+            if (Borrowing.bookQuantity < 1)
+                throw new Exception("Empty");
             else
-                Borrowing.State.Quantity -= 1;
+                Borrowing.bookQuantity -= 1;
 
             if (Borrowing != null)
                 Borrowings.Add(Borrowing);
@@ -161,12 +161,15 @@ namespace LibraryData
                 throw new ArgumentNullException();
         }
 
-        public override Borrowing? GetBorrowing(int UserID, int BookID)
+        public override Borrowing? GetBorrowing(int userId, int bookId)
         {
             try
             {
-                IEnumerable<Borrowing> tmp = Borrowings.Where(x => x.User.UserID == UserID).Where(y => y.State.Book.BookID == BookID);
-                return tmp.First();
+                return Borrowings.FirstOrDefault(b =>
+                {
+                    State? state = States.FirstOrDefault(s => s.Id == b.stateId);
+                    return b.userId == userId && state != null && state.bookId == bookId;
+                });
             }
             catch
             {
@@ -179,14 +182,16 @@ namespace LibraryData
             return Borrowings;
         }
 
-        public override void UpdateBorrowing(int UserID, int BookID, Borrowing Borrowing)
+        public override void UpdateBorrowing(int id, int bookId, int userId, int stateId, DateTime Date, int bookQuantity)
         {
-            Borrowing? tmp = this.GetBorrowing(UserID, BookID);
+            Borrowing? tmp = this.GetBorrowing(userId, bookId);
             if (tmp != null)
             {
-                tmp.User = Borrowing.User;
-                tmp.Date = Borrowing.Date;
-                tmp.State = Borrowing.State;
+                tmp.Id = id;
+                tmp.userId = userId;
+                tmp.stateId = stateId;
+                tmp.Date = Date;
+                tmp.bookQuantity = bookQuantity;
             }
         }
 

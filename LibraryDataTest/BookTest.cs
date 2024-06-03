@@ -14,7 +14,7 @@ namespace LibraryDataTest
         public void BookConstructor()
         {
             Book book = new Book(1, "Fairy Tail");
-            Assert.AreEqual(1, book.BookID);
+            Assert.AreEqual(1, book.Id);
             Assert.AreEqual("Fairy Tail", book.Name);
         }
 

@@ -9,17 +9,13 @@ namespace LibraryData.API
 {
     public abstract class IDataRepository
     {
-        public List<User> Users = new List<User>();
-        public Dictionary<int, Book> Catalog = new Dictionary<int, Book>();
-        public List<State> States = new List<State>();
-        public ObservableCollection<Borrowing> Borrowings = new ObservableCollection<Borrowing>();
 
         #region User
 
         public abstract void AddUser(User User);
-        public abstract User? GetUser(int UserID);
+        public abstract User? GetUser(int userId);
         public abstract List<User> GetUsers();
-        public abstract void UpdateUser(int UserID, User User);
+        public abstract void UpdateUser(int userId, User User);
         public abstract void DeleteUser(User User);
 
         #endregion
@@ -27,11 +23,11 @@ namespace LibraryData.API
 
         #region Book
 
-        public abstract void AddBook(Book Catalog);
-        public abstract Book? GetBook(int BookID);
+        public abstract void AddBook(Book Book);
+        public abstract Book? GetBook(int bookId);
         public abstract Dictionary<int, Book> GetBooks();
-        public abstract void UpdateBook(int BookID, Book Catalog);
-        public abstract void DeleteBook(int BookID);
+        public abstract void UpdateBook(int bookId, Book Book);
+        public abstract void DeleteBook(int bookId);
 
         #endregion
 
@@ -39,9 +35,9 @@ namespace LibraryData.API
         #region State
 
         public abstract void AddState(State State);
-        public abstract State? GetState(int BookID);
+        public abstract State? GetState(int stateId);
         public abstract List<State> GetStates();
-        public abstract void UpdateState(int BookID, State State);
+        public abstract void UpdateState(int stateId, State State);
         public abstract void DeleteState(State State);
 
         #endregion
@@ -50,9 +46,9 @@ namespace LibraryData.API
         #region Borrowing
 
         public abstract void AddBorrowing(Borrowing Borrowing);
-        public abstract Borrowing? GetBorrowing(int UserID, int BookID);
+        public abstract Borrowing? GetBorrowing(int userId, int bookId);
         public abstract ObservableCollection<Borrowing> GetBorrowings();
-        public abstract void UpdateBorrowing(int UserID, int BookID, Borrowing Borrowing);
+        public abstract void UpdateBorrowing(int id, int bookId, int userId, int stateId, DateTime Date, int bookQuantity);
         public abstract void DeleteBorrowing(Borrowing Borrowing);
 
         #endregion

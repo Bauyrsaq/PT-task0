@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Mindbox.Data.Linq" Version="10.7.2" />
+    <PackageReference Include="MTRANSLATE.LinqToSql" Version="1.0.5" />
+  </ItemGroup>
+
 </Project>

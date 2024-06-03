@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LibraryData.API;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,30 +7,36 @@ using System.Threading.Tasks;
 
 namespace LibraryData
 {
-    public class Borrowing
+    public class Borrowing : IBorrowing
     {
-        public User User { get; set; }
+        public int Id { get; set; }
+        public int userId { get; set; }
+        public int stateId { get; set; }
         public DateTime Date { get; set; }
-        public State State { get; set; }
+        public int bookQuantity { get; set; }
 
-        public Borrowing(User user, DateTime date, State state)
+        public Borrowing(int id, int userId, int stateId, DateTime date, int bookQuantity)
         {
-            this.User = user;
+            this.Id = id;
+            this.userId = userId;
+            this.stateId = stateId;
             this.Date = date;
-            this.State = state;
+            this.bookQuantity = bookQuantity;
         }
 
         public override string ToString()
         {
-            return User.ToString() + " Date: " + Date.ToString() + " State: " + State.ToString();
+            return Id + " " + userId + " State: " + stateId + " Date: " + Date.ToString() + " Quantity: " + bookQuantity;
         }
 
         public override int GetHashCode()
         {
-            int hashUser = User.GetHashCode();
+            int hashId = Id.GetHashCode();
+            int hashuserId = userId.GetHashCode();
+            int hashstateId = stateId.GetHashCode();
             int hashDate = Date.GetHashCode();
-            int hashState = State.GetHashCode();
-            return hashUser ^ hashDate ^ hashState;
+            int hashbookQuantity = bookQuantity.GetHashCode();
+            return hashId ^ hashuserId ^ hashstateId ^ hashDate ^ hashbookQuantity;
         }
     }
 }
