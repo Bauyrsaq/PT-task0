@@ -1,4 +1,5 @@
 ﻿using LibraryData.API;
+using LibraryData.Database;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -54,33 +55,24 @@ namespace LibraryData
 
         #region Book
 
-        public void AddBook(string name)
+        public void AddBook(int bookId, string name)
         {
-            var book = new Book
-            {
-                Name = name
-            };
-            _dataRepository.AddBook(book);
+            _dataRepository.AddBook(bookId, name);
         }
 
-        public Book? GetBook(int bookId)
+        public IBook? GetBook(int bookId)
         {
             return _dataRepository.GetBook(bookId);
         }
 
-        public Dictionary<int, Book> GetBooks()
+        public Dictionary<int, IBook> GetBooks()
         {
             return _dataRepository.GetBooks();
         }
 
         public void UpdateBook(int bookId, string name)
         {
-            var book = _dataRepository.GetBook(bookId);
-            if (book != null)
-            {
-                book.Name = name;
-                _dataRepository.UpdateBook(bookId, book);
-            }
+            _dataRepository.UpdateBook(bookId, name);
         }
 
         public void DeleteBook(int bookId)
@@ -93,44 +85,29 @@ namespace LibraryData
 
         #region State
 
-        public void AddState(int bookId, int bookQuantity)
+        public void AddState(int stateId, int bookId, int bookQuantity)
         {
-            var state = new State
-            {
-                bookId = bookId,
-                bookQuantity = bookQuantity
-            };
-            _dataRepository.AddState(state);
+            _dataRepository.AddState(stateId, bookId, bookQuantity);
         }
 
-        public State? GetState(int stateId)
+        public IState? GetState(int stateId)
         {
             return _dataRepository.GetState(stateId);
         }
 
-        public List<State> GetStates()
+        public Dictionary<int, IState> GetStates()
         {
             return _dataRepository.GetStates();
         }
 
         public void UpdateState(int stateId, int bookId, int bookQuantity)
         {
-            var state = _dataRepository.GetState(stateId);
-            if (state != null)
-            {
-                state.bookId = bookId;
-                state.bookQuantity = bookQuantity;
-                _dataRepository.UpdateState(stateId, state);
-            }
+            _dataRepository.UpdateState(stateId, bookId, bookQuantity);
         }
 
         public void DeleteState(int stateId)
         {
-            var state = _dataRepository.GetState(stateId);
-            if (state != null)
-            {
-                _dataRepository.DeleteState(state);
-            }
+            _dataRepository.DeleteState(stateId);
         }
 
         #endregion
@@ -138,40 +115,29 @@ namespace LibraryData
 
         #region Borrowing
 
-        public void AddBorrowing(int userId, int stateId, DateTime date, int bookQuantity = 0)
+        public void AddBorrowing(int borrowingId, int userId, int stateId, int bookQuantity = 0)
         {
-            var borrowing = new Borrowing
-            {
-                userId = userId,
-                stateId = stateId,
-                Date = date,
-                bookQuantity = bookQuantity
-            };
-            _dataRepository.AddBorrowing(borrowing);
+            _dataRepository.AddBorrowing(borrowingId, userId, stateId, DateTime.Now, bookQuantity);
         }
 
-        public Borrowing? GetBorrowing(int userId, int bookId)
+        public IBorrowing? GetBorrowing(int borrowingId)
         {
-            return _dataRepository.GetBorrowing(userId, bookId);
+            return _dataRepository.GetBorrowing(borrowingId);
         }
 
-        public ObservableCollection<Borrowing> GetBorrowings()
+        public Dictionary<int, IBorrowing> GetBorrowings()
         {
             return _dataRepository.GetBorrowings();
         }
 
-        public void UpdateBorrowing(int id, int bookId, int userId, int stateId, DateTime date, int bookQuantity)
+        public void UpdateBorrowing(int borrowingId, int userId, int stateId, int bookQuantity)
         {
-            _dataRepository.UpdateBorrowing(id, bookId, userId, stateId, DateTime.Now.Date, bookQuantity);
+            _dataRepository.UpdateBorrowing(borrowingId, userId, stateId, DateTime.Now, bookQuantity);
         }
 
-        public void DeleteBorrowing(int userId, int bookId)
+        public void DeleteBorrowing(int borrowingId)
         {
-            var borrowing = _dataRepository.GetBorrowing(userId, bookId);
-            if (borrowing != null)
-            {
-                _dataRepository.DeleteBorrowing(borrowing);
-            }
+            _dataRepository.DeleteBorrowing(borrowingId);
         }
 
         #endregion

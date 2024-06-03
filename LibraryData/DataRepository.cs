@@ -168,9 +168,9 @@ namespace LibraryData
 
         #region Borrowing
 
-        public override void AddBorrowing(int borrowingId, int userId, int stateId, int bookQuantity)
+        public override void AddBorrowing(int borrowingId, int userId, int stateId, DateTime Date, int bookQuantity)
         {
-            IBorrowing borrowing = new Borrowing(borrowingId, userId, stateId, DateTime.Now, bookQuantity);
+            IBorrowing borrowing = new Borrowing(borrowingId, userId, stateId, Date, bookQuantity);
             _context.AddBorrowing(borrowing);
         }
 
