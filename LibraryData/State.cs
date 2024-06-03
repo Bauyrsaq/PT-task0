@@ -13,26 +13,11 @@ namespace LibraryData
         public int bookId { get; set; }
         public int bookQuantity { get; set; }
 
-        public State() { }
-
         public State(int id, int bookId, int bookQuantity)
         {
             this.Id = id;
             this.bookId = bookId;
             this.bookQuantity = bookQuantity;
-        }
-
-        public override string ToString()
-        {
-            return Id + " " + bookId + " Quantity: " + bookQuantity;
-        }
-
-        public override int GetHashCode()
-        {
-            int hadhId = Id.GetHashCode();
-            int hashbookId = bookId.GetHashCode();
-            int hashbookQuantity = bookQuantity.GetHashCode();
-            return hadhId ^ hashbookId ^ hashbookQuantity;
         }
     }
 }

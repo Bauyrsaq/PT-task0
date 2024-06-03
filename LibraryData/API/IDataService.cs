@@ -22,10 +22,10 @@ namespace LibraryData.API
 
         #region Book
 
-        public abstract void AddBook(Book Book);
-        public abstract Book? GetBook(int bookId);
-        public abstract Dictionary<int, Book> GetBooks();
-        public abstract void UpdateBook(int bookId, Book Book);
+        public abstract void AddBook(int bookId, string name);
+        public abstract IBook? GetBook(int bookId);
+        public abstract Dictionary<int, IBook> GetBooks();
+        public abstract void UpdateBook(int bookId, string name);
         public abstract void DeleteBook(int bookId);
 
         #endregion
@@ -33,22 +33,22 @@ namespace LibraryData.API
 
         #region State
 
-        public abstract void AddState(State State);
-        public abstract State? GetState(int stateId);
-        public abstract List<State> GetStates();
-        public abstract void UpdateState(int stateId, State State);
-        public abstract void DeleteState(State State);
+        public abstract void AddState(int stateId, int bookId, int bookQuantity);
+        public abstract IState? GetState(int stateId);
+        public abstract Dictionary<int, IState> GetStates();
+        public abstract void UpdateState(int stateId, int bookId, int bookQuantity);
+        public abstract void DeleteState(int stateId);
 
         #endregion
 
 
         #region Borrowing
 
-        public abstract void AddBorrowing(Borrowing Borrowing);
-        public abstract Borrowing? GetBorrowing(int userId, int bookId);
-        public abstract ObservableCollection<Borrowing> GetBorrowings();
-        public abstract void UpdateBorrowing(int id, int bookId, int userId, int stateId, DateTime Date, int bookQuantity);
-        public abstract void DeleteBorrowing(Borrowing Borrowing);
+        public abstract void AddBorrowing(int borrowingId, int userId, int stateId, int bookQuantity);
+        public abstract Borrowing? GetBorrowing(int borrowingId);
+        public abstract Dictionary<int, IBorrowing> GetBorrowings();
+        public abstract void UpdateBorrowing(int borrowingId, int userId, int stateId, int bookQuantity);
+        public abstract void DeleteBorrowing(int borrowingId);
 
         #endregion
     }

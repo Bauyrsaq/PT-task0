@@ -104,11 +104,71 @@ namespace LibraryData
 
         #region Book
 
-        void AddBook(IBook book);
-        Book? GetBook(int bookId);
-        Dictionary<int, Book> GetBooks();
-        void UpdateBook(IBook book);
-        void DeleteBook(int bookId);
+        void AddBook(IBook book)
+        {
+            using (LibraryDataContext context = new LibraryDataContext(this.ConnectionString))
+            {
+                Database.Book entity = new Database.Book()
+                {
+                    Id = book.Id,
+                    Name = book.Name,
+                };
+
+                context.Books.InsertOnSubmit(entity);
+                context.SubmitChanges();
+            }
+        }
+
+        IBook? GetBook(int bookId)
+        {
+            using (LibraryDataContext context = new LibraryDataContext(this.ConnectionString))
+            {
+                IQueryable<Database.Book> query =
+                    from b in context.Books
+                    where b.Id == bookId
+                    select b;
+
+                Database.Book? book = query.FirstOrDefault();
+
+                return book is not null ? new Book(book.Id, book.Name) : null;
+            }
+        }
+
+        Dictionary<int, IBook> GetBooks()
+        {
+            using (LibraryDataContext context = new LibraryDataContext(this.ConnectionString))
+            {
+                IQueryable<IBook> query =
+                    from b in context.Books
+                    select new Book(b.Id, b.Name) as IBook;
+
+                return query.ToDictionary(k => k.Id);
+            }
+        }
+
+        void UpdateBook(IBook book)
+        {
+            using (LibraryDataContext context = new LibraryDataContext(this.ConnectionString))
+            {
+                Database.Book toUpdate = (from b in context.Books where b.Id == book.Id select b).FirstOrDefault()!;
+
+                toUpdate.Name = book.Name;
+
+                context.SubmitChanges();
+            }
+        }
+
+        void DeleteBook(int bookId)
+        {
+            using (LibraryDataContext context = new LibraryDataContext(this.ConnectionString))
+            {
+                Database.Book toDelete = (from b in context.Books where b.Id == bookId select b).FirstOrDefault()!;
+
+                context.Books.DeleteOnSubmit(toDelete);
+
+                context.SubmitChanges();
+            }
+        }
 
         #endregion
 

@@ -15,8 +15,6 @@ namespace LibraryData
         public DateTime Date { get; set; }
         public int bookQuantity { get; set; }
 
-        public Borrowing() { }
-
         public Borrowing(int id, int userId, int stateId, DateTime date, int bookQuantity)
         {
             this.Id = id;
@@ -24,21 +22,6 @@ namespace LibraryData
             this.stateId = stateId;
             this.Date = date;
             this.bookQuantity = bookQuantity;
-        }
-
-        public override string ToString()
-        {
-            return Id + " " + userId + " State: " + stateId + " Date: " + Date.ToString() + " Quantity: " + bookQuantity;
-        }
-
-        public override int GetHashCode()
-        {
-            int hashId = Id.GetHashCode();
-            int hashuserId = userId.GetHashCode();
-            int hashstateId = stateId.GetHashCode();
-            int hashDate = Date.GetHashCode();
-            int hashbookQuantity = bookQuantity.GetHashCode();
-            return hashId ^ hashuserId ^ hashstateId ^ hashDate ^ hashbookQuantity;
         }
     }
 }

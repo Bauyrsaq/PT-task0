@@ -12,24 +12,10 @@ namespace LibraryData
         public int Id { get; set; }
         public string Name { get; set; }
 
-        public Book() { }
-
         public Book(int id, string name)
         {
             this.Id = id;
             this.Name = name;
-        }
-
-        public override string ToString()
-        {
-            return Id + ": " + Name;
-        }
-
-        public override int GetHashCode()
-        {
-            int hashId = Id.GetHashCode();
-            int hashName = Name.GetHashCode();
-            return hashId ^ hashName;
         }
     }
 }
