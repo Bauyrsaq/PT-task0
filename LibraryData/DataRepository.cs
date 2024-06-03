@@ -7,6 +7,8 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using LibraryData.API;
+using LibraryData.Database;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace LibraryData
 {
@@ -32,7 +34,7 @@ namespace LibraryData
             IUser? user = this._context.GetUser(userId);
 
             if (user is null)
-                throw new Exception("Doesn't exist");
+                throw new Exception("User doesn't exist");
 
             return user;
         }
@@ -48,7 +50,7 @@ namespace LibraryData
             IUser user = new User(userId, name, surname);
 
             if (this.GetUser(userId) == null)
-                throw new ArgumentNullException("Doesn't exist");
+                throw new ArgumentNullException("User doesn't exist");
 
             this._context.UpdateUser(user);
         }
@@ -66,51 +68,43 @@ namespace LibraryData
 
         #region Book
 
-        public override void AddBook(Book Book)
+        public override void AddBook(int bookId, string name)
         {
-            if (Book == null)
-                throw new ArgumentNullException(nameof(Book));
-            _context.Books.Add(Book);
-            _context.SaveChanges();
+            IBook book = new Book(bookId, name);
+            _context.AddBook(book);
         }
 
-        public override Book? GetBook(int bookId)
+        public override IBook? GetBook(int bookId)
         {
-            try
-            {
-                return _context.Books.Find(bookId);
-            }
-            catch(KeyNotFoundException)
-            {
-                return null;
-            }
+            IBook? book = this._context.GetBook(bookId);
+
+            if (book is null)
+                throw new Exception("Book doesn't exist");
+
+            return book;
         }
 
-        public override Dictionary<int, Book> GetBooks()
+        public override Dictionary<int, IBook> GetBooks()
         {
-            return _context.Books.ToDictionary(b => b.Id);
+            return _context.GetBooks();
         }
 
-        public override void UpdateBook(int bookId, Book Book)
+        public override void UpdateBook(int bookId, string name)
         {
-            if (Book == null)
-                throw new ArgumentNullException(nameof(Book));
-            var tmp = _context.Books.Find(bookId);
-            if (tmp != null)
-            {
-                tmp.Name = Book.Name;
-                _context.SaveChanges();
-            }
+            IBook book = new Book(bookId, name);
+
+            if (this.GetBook(bookId) == null)
+                throw new ArgumentNullException("Book doesn't exist");
+
+            this._context.UpdateBook(book);
         }
 
         public override void DeleteBook(int bookId)
         {
-            var book = _context.Books.Find(bookId);
-            if (book != null)
-            {
-                _context.Books.Remove(book);
-                _context.SaveChanges();
-            }
+            if (this.GetBook(bookId) == null)
+                throw new ArgumentNullException(nameof(Book));
+
+            this._context.DeleteBook(bookId);
         }
 
         #endregion
@@ -118,42 +112,55 @@ namespace LibraryData
 
         #region State
 
-        public override void AddState(State State)
+        public override void AddState(int stateId, int bookId, int bookQuantity)
         {
-            if (State == null)
-                throw new ArgumentNullException(nameof(State));
-            _context.States.Add(State);
-            _context.SaveChanges();
+            if (this.GetState(stateId) == null)
+                throw new Exception("State doesn't exist");
+
+            if (bookQuantity <= 0)
+                throw new Exception("Books quantity must be graete than 0");
+
+            IState state = new State(stateId, bookId, bookQuantity);
+            _context.AddState(state);
         }
 
-        public override State? GetState(int stateId)
+        public override IState? GetState(int stateId)
         {
-            return _context.States.Find(stateId);
+            IState? state = this._context.GetState(stateId);
+
+            if (state is null)
+                throw new Exception("State doesn't exist");
+
+            return state;
         }
 
-        public override List<State> GetStates()
+        public override Dictionary<int, IState> GetStates()
         {
-            return _context.States.ToList();
+            return _context.GetStates();
         }
 
-        public override void UpdateState(int stateId, State State)
+        public override void UpdateState(int stateId, int bookId, int bookQuantity)
         {
-            if (State == null)
-                throw new ArgumentNullException(nameof(State));
-            var tmp = _context.States.Find(stateId);
-            if (tmp != null)
-            {
-                tmp.bookId = State.bookId;
-                tmp.bookQuantity = State.bookQuantity;
-                _context.SaveChanges();
-            }
+            if (this.GetState(stateId) == null)
+                throw new Exception("State doesn't exist");
+
+            if (bookQuantity <= 0)
+                throw new Exception("Books quantity must be graete than 0");
+
+            IState state = new State(stateId, bookId, bookQuantity);
+
+            if (this.GetState(stateId) == null)
+                throw new ArgumentNullException("State doesn't exist");
+
+            this._context.UpdateState(state);
         }
 
-        public override void DeleteState(State State)
+        public override void DeleteState(int stateId)
         {
-            if (State == null) throw new ArgumentNullException(nameof(State));
-            _context.States.Remove(State);
-            _context.SaveChanges();
+            if (this.GetState(stateId) == null)
+                throw new ArgumentNullException("State doesn't exist");
+
+            this._context.DeleteState(stateId);
         }
 
         #endregion
@@ -161,64 +168,43 @@ namespace LibraryData
 
         #region Borrowing
 
-        public override void AddBorrowing(Borrowing Borrowing)
+        public override void AddBorrowing(int borrowingId, int userId, int stateId, int bookQuantity)
         {
-            if (Borrowing.bookQuantity < 1)
-                throw new Exception("Empty");
-            else
-                Borrowing.bookQuantity -= 1;
-
-            if (Borrowing == null)
-                throw new ArgumentNullException(nameof(Borrowing));
-            _context.Borrowings.Add(Borrowing);
-            _context.SaveChanges();
+            IBorrowing borrowing = new Borrowing(borrowingId, userId, stateId, DateTime.Now, bookQuantity);
+            _context.AddBorrowing(borrowing);
         }
 
-        public override Borrowing? GetBorrowing(int userId, int bookId)
+        public override IBorrowing? GetBorrowing(int borrowingId)
         {
-            try
-            {
-                var borrowing = _context.Borrowings
-                    .Join(
-                        _context.States,
-                        borrowing => borrowing.stateId,
-                        state => state.Id,
-                        (borrowing, state) => new { Borrowing = borrowing, State = state }
-                    )
-                    .FirstOrDefault(joined => joined.Borrowing.userId == userId && joined.State.bookId == bookId)?.Borrowing;
+            IBorrowing? borrowing = this._context.GetBorrowing(borrowingId);
 
-                return borrowing;
-            }
-            catch
-            {
-                return null;
-            }
+            if (borrowing is null)
+                throw new Exception("Borrowing doesn't exist");
+
+            return borrowing;
         }
 
-        public override ObservableCollection<Borrowing> GetBorrowings()
+        public override Dictionary<int, IBorrowing> GetBorrowings()
         {
-            return new ObservableCollection<Borrowing>(_context.Borrowings.ToList());
+            return _context.GetBorrowings();
         }
 
-        public override void UpdateBorrowing(int id, int bookId, int userId, int stateId, DateTime Date, int bookQuantity)
+        public override void UpdateBorrowing(int borrowingId, int userId, int stateId, DateTime Date, int bookQuantity)
         {
-            var tmp = _context.Borrowings.Find(id);
-            if (tmp != null)
-            {
-                tmp.userId = userId;
-                tmp.stateId = stateId;
-                tmp.Date = Date;
-                tmp.bookQuantity = bookQuantity;
-                _context.SaveChanges();
-            }
+            IBorrowing borrowing = new Borrowing(borrowingId, userId, stateId, Date, bookQuantity);
+
+            if (this.GetBorrowing(borrowingId) == null)
+                throw new ArgumentNullException("Borrowing doesn't exist");
+
+            this._context.UpdateBorrowing(borrowing);
         }
 
-        public override void DeleteBorrowing(Borrowing Borrowing)
+        public override void DeleteBorrowing(int borrowingId)
         {
-            if (Borrowing == null)
-                throw new ArgumentNullException(nameof(Borrowing));
-            _context.Borrowings.Remove(Borrowing);
-            _context.SaveChanges();
+            if (this.GetBorrowing(borrowingId) == null)
+                throw new ArgumentNullException("Borrowing doesn't exist");
+
+            this._context.DeleteState(borrowingId);
         }
 
         #endregion
