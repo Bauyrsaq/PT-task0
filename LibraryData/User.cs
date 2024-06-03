@@ -12,7 +12,9 @@ namespace LibraryData
         public int Id { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
-        
+
+        public User() { }
+
         public User(int id, string name, string surname)
         {
             this.Id = id;

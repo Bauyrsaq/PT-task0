@@ -13,20 +13,25 @@ namespace LibraryData
 {
     public class DataService
     {
-        private DataRepository _dataRepository;
+        private readonly IDataRepository _dataRepository;
 
-        public DataService(DataRepository dataRepository)
+        public DataService(IDataRepository dataRepository)
         {
             if (dataRepository == null)
                 throw new ArgumentNullException(); 
-            this._dataRepository = dataRepository ?? throw new ArgumentNullException(nameof(dataRepository));
+            _dataRepository = dataRepository;
         }
 
         #region User
 
-        public void AddUser(User User)
+        public void AddUser(string name, string surname)
         {
-            _dataRepository.AddUser(User);
+            var user = new User
+            {
+                Name = name,
+                Surname = surname
+            };
+            _dataRepository.AddUser(user);
         }
 
         public User? GetUser(int userId)
@@ -39,14 +44,24 @@ namespace LibraryData
             return _dataRepository.GetUsers();
         }
 
-        public void UpdateUser(int userId, User User)
+        public void UpdateUser(int userId, string name, string surname)
         {
-            _dataRepository.UpdateUser(userId, User);
+            var user = _dataRepository.GetUser(userId);
+            if (user != null)
+            {
+                user.Name = name;
+                user.Surname = surname;
+                _dataRepository.UpdateUser(userId, user);
+            }
         }
 
-        public void DeleteUser(User User)
+        public void DeleteUser(int userId)
         {
-            _dataRepository.DeleteUser(User);
+            var user = _dataRepository.GetUser(userId);
+            if (user != null)
+            {
+                _dataRepository.DeleteUser(user);
+            }
         }
 
         #endregion
@@ -54,9 +69,13 @@ namespace LibraryData
 
         #region Book
 
-        public void AddBook(Book Book)
+        public void AddBook(string name)
         {
-            _dataRepository.AddBook(Book);
+            var book = new Book
+            {
+                Name = name
+            };
+            _dataRepository.AddBook(book);
         }
 
         public Book? GetBook(int bookId)
@@ -69,9 +88,14 @@ namespace LibraryData
             return _dataRepository.GetBooks();
         }
 
-        public void UpdateBook(int bookId, Book Book)
+        public void UpdateBook(int bookId, string name)
         {
-            _dataRepository.UpdateBook(bookId, Book);
+            var book = _dataRepository.GetBook(bookId);
+            if (book != null)
+            {
+                book.Name = name;
+                _dataRepository.UpdateBook(bookId, book);
+            }
         }
 
         public void DeleteBook(int bookId)
@@ -84,9 +108,14 @@ namespace LibraryData
 
         #region State
 
-        public void AddState(State State)
+        public void AddState(int bookId, int bookQuantity)
         {
-            _dataRepository.AddState(State);
+            var state = new State
+            {
+                bookId = bookId,
+                bookQuantity = bookQuantity
+            };
+            _dataRepository.AddState(state);
         }
 
         public State? GetState(int stateId)
@@ -99,14 +128,24 @@ namespace LibraryData
             return _dataRepository.GetStates();
         }
 
-        public void UpdateState(int stateId, State State)
+        public void UpdateState(int stateId, int bookId, int bookQuantity)
         {
-            _dataRepository.UpdateState(stateId, State);
+            var state = _dataRepository.GetState(stateId);
+            if (state != null)
+            {
+                state.bookId = bookId;
+                state.bookQuantity = bookQuantity;
+                _dataRepository.UpdateState(stateId, state);
+            }
         }
 
-        public void DeleteState(State State)
+        public void DeleteState(int stateId)
         {
-            _dataRepository.DeleteState(State);
+            var state = _dataRepository.GetState(stateId);
+            if (state != null)
+            {
+                _dataRepository.DeleteState(state);
+            }
         }
 
         #endregion
@@ -114,16 +153,16 @@ namespace LibraryData
 
         #region Borrowing
 
-        public void AddBorrowing(int id, int userId, int stateId, int bookQuantity = 0)
+        public void AddBorrowing(int userId, int stateId, DateTime date, int bookQuantity = 0)
         {
-            User? user = GetUser(userId);
-            State? state = GetState(bookQuantity);
-            if (user == null || state == null)
-                throw new ArgumentNullException();
-
-            Borrowing tmp = new Borrowing(id, userId, stateId, DateTime.Now.Date, bookQuantity);
-            _dataRepository.GetBorrowings().CollectionChanged += OnAddCollectionChanged;
-            _dataRepository.AddBorrowing(tmp);
+            var borrowing = new Borrowing
+            {
+                userId = userId,
+                stateId = stateId,
+                Date = date,
+                bookQuantity = bookQuantity
+            };
+            _dataRepository.AddBorrowing(borrowing);
         }
 
         public Borrowing? GetBorrowing(int userId, int bookId)
@@ -136,100 +175,18 @@ namespace LibraryData
             return _dataRepository.GetBorrowings();
         }
 
-        public void UpdateBorrowing(int stateId, int userId, int bookId, Borrowing Borrowing)
+        public void UpdateBorrowing(int id, int bookId, int userId, int stateId, DateTime date, int bookQuantity)
         {
-            _dataRepository.UpdateBorrowing(stateId, bookId, userId, stateId, DateTime.Now.Date, Borrowing.bookQuantity);
+            _dataRepository.UpdateBorrowing(id, bookId, userId, stateId, DateTime.Now.Date, bookQuantity);
         }
 
-        public void DeleteBorrowing(Borrowing Borrowing)
+        public void DeleteBorrowing(int userId, int bookId)
         {
-            _dataRepository.GetBorrowings().CollectionChanged += OnDeleteCollectionChanged;
-            _dataRepository.DeleteBorrowing(Borrowing);
-        }
-
-        public IEnumerable<Borrowing> BorrowingsForBook(Book Book, State State)
-        {
-            if (Book == null)
-                throw new ArgumentNullException();
-
-            State? state = _dataRepository.States.FirstOrDefault(s => s.Id == State.Id);
-            if (state == null) throw new ArgumentNullException(); 
-            return from events in _dataRepository.GetBorrowings()
-                   where state.bookId == Book.Id
-                   select events;
-        }
-
-        public IEnumerable<Borrowing> BorrowingsBetweenDates(DateTime StartDate, DateTime EndDate)
-        {
-            return from events in _dataRepository.GetBorrowings()
-                   where events.Date.Date >= StartDate.Date && events.Date.Date <= EndDate
-                   select events;
-        }
-
-        #endregion
-
-        #region Additional functions
-
-        public void OnAddCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
-        {
-            if (e.NewItems != null)
+            var borrowing = _dataRepository.GetBorrowing(userId, bookId);
+            if (borrowing != null)
             {
-                foreach (Borrowing element in e.NewItems)
-                {
-                    State? state = _dataRepository.States.FirstOrDefault(s => s.Id == element.stateId);
-                    if (state == null) throw new ArgumentNullException();
-                    _dataRepository.UpdateState(element.stateId, new State(element.stateId, state.bookId, element.bookQuantity + 1));
-                }
+                _dataRepository.DeleteBorrowing(borrowing);
             }
-        }
-
-        public void OnDeleteCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
-        {
-            if (e.OldItems != null)
-            {
-                foreach (Borrowing element in e.OldItems)
-                {
-                    State? state = _dataRepository.States.FirstOrDefault(s => s.Id == element.stateId);
-                    if (state == null) throw new ArgumentNullException();
-                    _dataRepository.UpdateState(element.stateId, new State(element.stateId, state.bookId, element.bookQuantity - 1));
-                }
-            }
-        }
-
-        public void PrintRelatedData(IEnumerable<Borrowing> borrowings)
-        {
-            if (borrowings == null)
-                throw new ArgumentNullException();
-
-            StringBuilder sb = new StringBuilder();
-            int i = 0;
-            foreach (Borrowing b in borrowings)
-            {
-                sb.Append("Borrowing " + i + ":");
-                sb.Append(b.ToString());
-                sb.Append(Environment.NewLine);
-                i++;
-            }
-            Console.WriteLine(sb.ToString(0, sb.Length - 1));
-        }
-
-        public void PrintCatalog(IDictionary<int, Book> positions)
-        {
-            if (positions == null)
-                throw new ArgumentNullException();
-
-            StringBuilder sb = new StringBuilder();
-            foreach(KeyValuePair<int, Book> p in positions)
-            {
-                sb.Append(p.Key);
-                sb.Append(":");
-                sb.Append(p.Value.Id);
-                sb.Append(",");
-                sb.Append(p.Value.Name);
-                sb.Append(Environment.NewLine);
-            }
-            Console.WriteLine(sb.ToString(0, sb.Length - 1));
-
         }
 
         #endregion

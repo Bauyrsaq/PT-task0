@@ -13,6 +13,8 @@ namespace LibraryData
         public int bookId { get; set; }
         public int bookQuantity { get; set; }
 
+        public State() { }
+
         public State(int id, int bookId, int bookQuantity)
         {
             this.Id = id;
