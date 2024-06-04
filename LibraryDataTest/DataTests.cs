@@ -21,8 +21,8 @@ namespace LibraryDataTest
         public static void ClassInitializeMethod(TestContext context)
         {
             string _DBRelativePath = @"LibraryDBTest.mdf";
-            string _projectRootDir = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
-            string _DBPath = Path.Combine(_projectRootDir.ToString(), _DBRelativePath);
+            string _projectRootDir = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName;
+            string _DBPath = Path.Combine(_projectRootDir, _DBRelativePath);
             FileInfo _databaseFile = new FileInfo(_DBPath);
             Assert.IsTrue(_databaseFile.Exists, $"{Environment.CurrentDirectory}");
             connectionString = $@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename={_DBPath};Integrated Security = True; Connect Timeout = 30;";
