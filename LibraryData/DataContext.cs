@@ -19,7 +19,7 @@ namespace LibraryData
         {
             if (connectionString is null)
             {
-                string _projectRootDir = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName;
+                string _projectRootDir = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName;
                 string _DBRelativePath = @"Database\LibraryDB.mdf";
                 string _DBPath = Path.Combine(_projectRootDir, _DBRelativePath);
                 this.ConnectionString = $@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename={_DBPath};Integrated Security = True; Connect Timeout = 30;";

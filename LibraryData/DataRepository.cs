@@ -23,13 +23,13 @@ namespace LibraryData
 
         #region User
 
-        public override void AddUser(int userId, string name, string surname) 
+        public void AddUser(int userId, string name, string surname) 
         {
             IUser user = new User(userId, name, surname);
             _context.AddUser(user);
         }
 
-        public override IUser? GetUser(int userId) 
+        public IUser? GetUser(int userId) 
         {
             IUser? user = this._context.GetUser(userId);
 
@@ -39,12 +39,12 @@ namespace LibraryData
             return user;
         }
 
-        public override Dictionary<int, IUser> GetUsers()
+        public Dictionary<int, IUser> GetUsers()
         {
             return _context.GetUsers();
         }
 
-        public override void UpdateUser(int userId, string name, string surname)
+        public void UpdateUser(int userId, string name, string surname)
         {
 
             IUser user = new User(userId, name, surname);
@@ -55,7 +55,7 @@ namespace LibraryData
             this._context.UpdateUser(user);
         }
 
-        public override void DeleteUser(int userId)
+        public void DeleteUser(int userId)
         {
             if (this.GetUser(userId) == null)
                 throw new ArgumentNullException(nameof(User));
@@ -68,13 +68,13 @@ namespace LibraryData
 
         #region Book
 
-        public override void AddBook(int bookId, string name)
+        public void AddBook(int bookId, string name)
         {
             IBook book = new Book(bookId, name);
             _context.AddBook(book);
         }
 
-        public override IBook? GetBook(int bookId)
+        public IBook? GetBook(int bookId)
         {
             IBook? book = this._context.GetBook(bookId);
 
@@ -84,12 +84,12 @@ namespace LibraryData
             return book;
         }
 
-        public override Dictionary<int, IBook> GetBooks()
+        public Dictionary<int, IBook> GetBooks()
         {
             return _context.GetBooks();
         }
 
-        public override void UpdateBook(int bookId, string name)
+        public void UpdateBook(int bookId, string name)
         {
             IBook book = new Book(bookId, name);
 
@@ -99,7 +99,7 @@ namespace LibraryData
             this._context.UpdateBook(book);
         }
 
-        public override void DeleteBook(int bookId)
+        public void DeleteBook(int bookId)
         {
             if (this.GetBook(bookId) == null)
                 throw new ArgumentNullException(nameof(Book));
@@ -112,7 +112,7 @@ namespace LibraryData
 
         #region State
 
-        public override void AddState(int stateId, int bookId, int bookQuantity)
+        public void AddState(int stateId, int bookId, int bookQuantity)
         {
             if (this.GetState(stateId) == null)
                 throw new Exception("State doesn't exist");
@@ -124,7 +124,7 @@ namespace LibraryData
             _context.AddState(state);
         }
 
-        public override IState? GetState(int stateId)
+        public IState? GetState(int stateId)
         {
             IState? state = this._context.GetState(stateId);
 
@@ -134,12 +134,12 @@ namespace LibraryData
             return state;
         }
 
-        public override Dictionary<int, IState> GetStates()
+        public Dictionary<int, IState> GetStates()
         {
             return _context.GetStates();
         }
 
-        public override void UpdateState(int stateId, int bookId, int bookQuantity)
+        public void UpdateState(int stateId, int bookId, int bookQuantity)
         {
             if (this.GetState(stateId) == null)
                 throw new Exception("State doesn't exist");
@@ -155,7 +155,7 @@ namespace LibraryData
             this._context.UpdateState(state);
         }
 
-        public override void DeleteState(int stateId)
+        public void DeleteState(int stateId)
         {
             if (this.GetState(stateId) == null)
                 throw new ArgumentNullException("State doesn't exist");
@@ -168,13 +168,13 @@ namespace LibraryData
 
         #region Borrowing
 
-        public override void AddBorrowing(int borrowingId, int userId, int stateId, DateTime Date, int bookQuantity)
+        public void AddBorrowing(int borrowingId, int userId, int stateId, DateTime Date, int bookQuantity)
         {
             IBorrowing borrowing = new Borrowing(borrowingId, userId, stateId, Date, bookQuantity);
             _context.AddBorrowing(borrowing);
         }
 
-        public override IBorrowing? GetBorrowing(int borrowingId)
+        public IBorrowing? GetBorrowing(int borrowingId)
         {
             IBorrowing? borrowing = this._context.GetBorrowing(borrowingId);
 
@@ -184,12 +184,12 @@ namespace LibraryData
             return borrowing;
         }
 
-        public override Dictionary<int, IBorrowing> GetBorrowings()
+        public Dictionary<int, IBorrowing> GetBorrowings()
         {
             return _context.GetBorrowings();
         }
 
-        public override void UpdateBorrowing(int borrowingId, int userId, int stateId, DateTime Date, int bookQuantity)
+        public void UpdateBorrowing(int borrowingId, int userId, int stateId, DateTime Date, int bookQuantity)
         {
             IBorrowing borrowing = new Borrowing(borrowingId, userId, stateId, Date, bookQuantity);
 
@@ -199,7 +199,7 @@ namespace LibraryData
             this._context.UpdateBorrowing(borrowing);
         }
 
-        public override void DeleteBorrowing(int borrowingId)
+        public void DeleteBorrowing(int borrowingId)
         {
             if (this.GetBorrowing(borrowingId) == null)
                 throw new ArgumentNullException("Borrowing doesn't exist");
