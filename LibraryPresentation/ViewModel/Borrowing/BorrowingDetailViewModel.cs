@@ -1,4 +1,4 @@
-﻿using LibraryPresentation.Model.API;
+﻿using LibraryPresentation.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +14,7 @@ namespace LibraryPresentation.ViewModel
 
         private readonly IBorrowingModelOperation _modelOperation;
 
-        private readonly IErrorInformer _informer;
+        
 
         private int _id;
 
@@ -76,15 +76,15 @@ namespace LibraryPresentation.ViewModel
             }
         }
 
-        public BorrowingDetailViewModel(IBorrowingModelOperation? model = null, IErrorInformer? informer = null)
+        public BorrowingDetailViewModel(IBorrowingModelOperation? model = null)
         {
             this.UpdateBorrowing = new OnClickCommand(e => this.Update(), c => this.CanUpdate());
 
             this._modelOperation = model ?? IBorrowingModelOperation.CreateModelOperation();
-            this._informer = informer ?? new PopupErrorInformer();
+            
         }
 
-        public BorrowingDetailViewModel(int id, int userId, int stateId, DateTime Date, int? bookQuantity, IBorrowingModelOperation? model = null, IErrorInformer? informer = null)
+        public BorrowingDetailViewModel(int id, int userId, int stateId, DateTime Date, int? bookQuantity, IBorrowingModelOperation? model = null)
         {
             this.Id = id;
             this.userId = userId;
@@ -95,14 +95,13 @@ namespace LibraryPresentation.ViewModel
             this.UpdateBorrowing = new OnClickCommand(e => this.Update(), c => this.CanUpdate());
 
             this._modelOperation = model ?? IBorrowingModelOperation.CreateModelOperation();
-            this._informer = informer ?? new PopupErrorInformer();
+            
         }
 
         private void Update()
         {
             this._modelOperation.UpdateBorrowing(this.Id, this.userId, this.stateId, this.Date, this.bookQuantity);
 
-            this._informer.InformSuccess("Borrowing successfully updated!");
         }
 
         private bool CanUpdate()

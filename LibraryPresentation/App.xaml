@@ -1,7 +1,7 @@
-﻿<Application x:Class="LibraryPresentation.App"
+﻿<Application x:Class="LibraryPresentation.View.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:LibraryPresentation"
+             xmlns:local="clr-namespace:LibraryPresentation.View"
              xmlns:viewmodels="clr-namespace:LibraryPresentation.ViewModel"
              xmlns:views="clr-namespace:LibraryPresentation.View"
              StartupUri="View/MainWindow.xaml">

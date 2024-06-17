@@ -1,5 +1,5 @@
 ﻿using LibraryLogic.API;
-using LibraryPresentation.Model.API;
+using LibraryPresentation.Model;
 using LibraryPresentation.ViewModel;
 using LibraryPresentation;
 using LibraryPresentationTest.Mock;
@@ -14,7 +14,6 @@ namespace LibraryPresentationTest
     [TestClass]
     public class PresentationTests
     {
-        private readonly IErrorInformer _informer = new TextErrorInformer();
 
         [TestMethod]
         public void UserMasterViewModelTests()
@@ -23,7 +22,7 @@ namespace LibraryPresentationTest
 
             IUserModelOperation operation = IUserModelOperation.CreateModelOperation(userCrud);
 
-            IUserMasterViewModel viewModel = IUserMasterViewModel.CreateViewModel(operation, _informer);
+            IUserMasterViewModel viewModel = IUserMasterViewModel.CreateViewModel(operation);
 
             viewModel.Name = "John";
             viewModel.Surname = "Kowalski";
@@ -43,7 +42,7 @@ namespace LibraryPresentationTest
 
             IUserModelOperation operation = IUserModelOperation.CreateModelOperation(userCrud);
 
-            IUserDetailViewModel detail = IUserDetailViewModel.CreateViewModel(1, "John", "Kowalski", operation, _informer);
+            IUserDetailViewModel detail = IUserDetailViewModel.CreateViewModel(1, "John", "Kowalski", operation);
 
             Assert.AreEqual(1, detail.Id);
             Assert.AreEqual("John", detail.Name);
@@ -59,7 +58,7 @@ namespace LibraryPresentationTest
 
             IBookModelOperation operation = IBookModelOperation.CreateModelOperation(BookCRUDMock);
 
-            IBookMasterViewModel master = IBookMasterViewModel.CreateViewModel(operation, _informer);
+            IBookMasterViewModel master = IBookMasterViewModel.CreateViewModel(operation);
 
             master.Author = "Tramp";
             master.Name = "ABCD";
@@ -79,7 +78,7 @@ namespace LibraryPresentationTest
 
             IBookModelOperation operation = IBookModelOperation.CreateModelOperation(BookCRUDMock);
 
-            IBookDetailViewModel detail = IBookDetailViewModel.CreateViewModel(1, "Tramp", "ABCD", operation, _informer);
+            IBookDetailViewModel detail = IBookDetailViewModel.CreateViewModel(1, "Tramp", "ABCD", operation);
 
             Assert.AreEqual(1, detail.Id);
             Assert.AreEqual("Tramp", detail.Author);
@@ -95,7 +94,7 @@ namespace LibraryPresentationTest
 
             IStateModelOperation operation = IStateModelOperation.CreateModelOperation(StateCRUDMock);
 
-            IStateMasterViewModel master = IStateMasterViewModel.CreateViewModel(operation, _informer);
+            IStateMasterViewModel master = IStateMasterViewModel.CreateViewModel(operation);
 
             master.bookId = 1;
             master.bookQuantity = 1;
@@ -119,7 +118,7 @@ namespace LibraryPresentationTest
 
             IStateModelOperation operation = IStateModelOperation.CreateModelOperation(StateCRUDMock);
 
-            IStateDetailViewModel detail = IStateDetailViewModel.CreateViewModel(1, 1, 1, operation, _informer);
+            IStateDetailViewModel detail = IStateDetailViewModel.CreateViewModel(1, 1, 1, operation);
 
             Assert.AreEqual(1, detail.Id);
             Assert.AreEqual(1, detail.bookId);
@@ -135,7 +134,7 @@ namespace LibraryPresentationTest
 
             IBorrowingModelOperation operation = IBorrowingModelOperation.CreateModelOperation(BorrowingCRUDMock);
 
-            IBorrowingMasterViewModel master = IBorrowingMasterViewModel.CreateViewModel(operation, _informer);
+            IBorrowingMasterViewModel master = IBorrowingMasterViewModel.CreateViewModel(operation);
 
             master.userId = 1;
             master.stateId = 1;
@@ -163,7 +162,7 @@ namespace LibraryPresentationTest
 
             IBorrowingModelOperation operation = IBorrowingModelOperation.CreateModelOperation(BorrowingCRUDMock);
 
-            IBorrowingDetailViewModel detail = IBorrowingDetailViewModel.CreateViewModel(1, 1, 1, new DateTime(2001, 1, 1), null, operation, _informer);
+            IBorrowingDetailViewModel detail = IBorrowingDetailViewModel.CreateViewModel(1, 1, 1, new DateTime(2001, 1, 1), null, operation);
 
             Assert.AreEqual(1, detail.Id);
             Assert.AreEqual(1, detail.userId);
@@ -180,20 +179,20 @@ namespace LibraryPresentationTest
 
             IUserCRUD UserCRUDMock = new UserCRUDMock();
             IUserModelOperation userOperation = IUserModelOperation.CreateModelOperation(UserCRUDMock);
-            IUserMasterViewModel userViewModel = IUserMasterViewModel.CreateViewModel(userOperation, _informer);
+            IUserMasterViewModel userViewModel = IUserMasterViewModel.CreateViewModel(userOperation);
 
             IBookCRUD BookCRUDMock = new BookCRUDMock();
             IBookModelOperation BookOperation = IBookModelOperation.CreateModelOperation(BookCRUDMock);
-            IBookMasterViewModel BookViewModel = IBookMasterViewModel.CreateViewModel(BookOperation, _informer);
+            IBookMasterViewModel BookViewModel = IBookMasterViewModel.CreateViewModel(BookOperation);
 
 
             IStateCRUD StateCRUDMock = new StateCRUDMock();
             IStateModelOperation stateOperation = IStateModelOperation.CreateModelOperation(StateCRUDMock);
-            IStateMasterViewModel stateViewModel = IStateMasterViewModel.CreateViewModel(stateOperation, _informer);
+            IStateMasterViewModel stateViewModel = IStateMasterViewModel.CreateViewModel(stateOperation);
 
             IBorrowingCRUD BorrowingCRUDMock = new BorrowingCRUDMock();
             IBorrowingModelOperation BorrowingOperation = IBorrowingModelOperation.CreateModelOperation(BorrowingCRUDMock);
-            IBorrowingMasterViewModel BorrowingViewModel = IBorrowingMasterViewModel.CreateViewModel(BorrowingOperation, _informer);
+            IBorrowingMasterViewModel BorrowingViewModel = IBorrowingMasterViewModel.CreateViewModel(BorrowingOperation);
 
             randomGenerator.GenerateUserModels(userViewModel);
             randomGenerator.GenerateBookModels(BookViewModel);

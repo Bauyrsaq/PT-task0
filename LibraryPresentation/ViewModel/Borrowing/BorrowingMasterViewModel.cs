@@ -1,4 +1,4 @@
-﻿using LibraryPresentation.Model.API;
+﻿using LibraryPresentation.Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -28,7 +28,7 @@ namespace LibraryPresentation.ViewModel
 
         private readonly IBorrowingModelOperation _modelOperation;
 
-        private readonly IErrorInformer _informer;
+        
 
         private ObservableCollection<IBorrowingDetailViewModel> _borrowings;
 
@@ -118,7 +118,7 @@ namespace LibraryPresentation.ViewModel
             }
         }
 
-        public BorrowingMasterViewModel(IBorrowingModelOperation? model = null, IErrorInformer? informer = null)
+        public BorrowingMasterViewModel(IBorrowingModelOperation? model = null)
         {
             this.SwitchToUserMasterPage = new SwitchViewCommand("UserMasterView");
             this.SwitchToBookMasterPage = new SwitchViewCommand("BookMasterView");
@@ -132,7 +132,7 @@ namespace LibraryPresentation.ViewModel
             this.Borrowings = new ObservableCollection<IBorrowingDetailViewModel>();
 
             this._modelOperation = model ?? IBorrowingModelOperation.CreateModelOperation();
-            this._informer = informer ?? new PopupErrorInformer();
+            
 
             this.IsBorrowingSelected = false;
 
@@ -171,7 +171,6 @@ namespace LibraryPresentation.ViewModel
 
             this._modelOperation.AddBorrowing(lastId, this.userId, this.stateId);
 
-            this._informer.InformSuccess("Borrowing successfully created!");
 
             this.LoadBorrowings();
         }
@@ -184,7 +183,6 @@ namespace LibraryPresentation.ViewModel
 
             this.LoadBorrowings();
 
-            this._informer.InformSuccess("Borrowing successfully created!");
         }
 
         private void StoreSupplyBorrowing()
@@ -195,7 +193,6 @@ namespace LibraryPresentation.ViewModel
 
             this.LoadBorrowings();
 
-            this._informer.InformSuccess("Borrowing successfully created!");
         }
 
         private void DeleteBorrowing()
@@ -204,13 +201,11 @@ namespace LibraryPresentation.ViewModel
             {
                 this._modelOperation.DeleteBorrowing(this.SelectedDetailViewModel.Id);
 
-                this._informer.InformSuccess("Borrowing successfully deleted!");
 
                 this.LoadBorrowings();
             }
             catch (Exception e)
             {
-                this._informer.InformError("Error while deleting user! Remember to remove all associated events!");
             }
         }
 
